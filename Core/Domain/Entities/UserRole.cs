@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Contracts;
 
 namespace Core.Domain.Entities
 {
-    public class UserRole
+    public class UserRole : AuditableEntity
     {
         public Guid Id { get; set; }
         public Guid UserId { get; set; }

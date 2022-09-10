@@ -52,16 +52,17 @@ namespace Application.Implementations.Services
                 Email = request.UserName,
                 Firstname = request.FirstName,
                 LastName = request.LastName,
-                Phone = request.PhoneNumber
+                Phone = request.PhoneNumber,
+                CreatedBy = "fmkDev"
                 
             };
             user.Password = _identityService.GetPasswordHash(request.Password);
             var newUser = await _userManager.CreateAsync(user);
-            if (!newUser.Succeeded)
+            if (newUser == null)
             {
                 throw new Exception(UsersConstant.NotSuccessMessage);
             }
-            await _userManager.AddToRolesAsync(user, request.RoleNames);
+            var result = await _userManager.AddToRolesAsync(user, request.RoleNames);
             return new BaseResponse
             {
                 Message = UsersConstant.SuccessMessage,

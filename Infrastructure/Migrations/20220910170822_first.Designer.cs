@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence.Context;
 
@@ -11,9 +12,10 @@ using Persistence.Context;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20220910170822_first")]
+    partial class first
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -77,27 +79,6 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("LastModifiedOn")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -108,26 +89,17 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("a8556f8e-d46e-4903-ae82-a83b0cb33303"),
-                            CreatedOn = new DateTime(2022, 9, 10, 17, 21, 57, 884, DateTimeKind.Utc).AddTicks(6172),
-                            IsDeleted = false,
-                            LastModifiedOn = new DateTime(2022, 9, 10, 17, 21, 57, 884, DateTimeKind.Utc).AddTicks(6175),
+                            Id = new Guid("58ce43b1-b2f7-47ec-a25e-3507a411c869"),
                             Name = "Admin"
                         },
                         new
                         {
-                            Id = new Guid("72249e3d-c272-4339-bdf8-157d21080ec3"),
-                            CreatedOn = new DateTime(2022, 9, 10, 17, 21, 57, 884, DateTimeKind.Utc).AddTicks(6674),
-                            IsDeleted = false,
-                            LastModifiedOn = new DateTime(2022, 9, 10, 17, 21, 57, 884, DateTimeKind.Utc).AddTicks(6674),
+                            Id = new Guid("b9fc3ccd-9827-4dc1-83db-e92009d87269"),
                             Name = "Patients"
                         },
                         new
                         {
-                            Id = new Guid("4e8dfd34-b32a-455d-8299-f67e50a6386b"),
-                            CreatedOn = new DateTime(2022, 9, 10, 17, 21, 57, 884, DateTimeKind.Utc).AddTicks(6680),
-                            IsDeleted = false,
-                            LastModifiedOn = new DateTime(2022, 9, 10, 17, 21, 57, 884, DateTimeKind.Utc).AddTicks(6680),
+                            Id = new Guid("72c8f9f4-bcf5-4e17-8e60-730d764184be"),
                             Name = "Staff"
                         });
                 });
@@ -193,27 +165,6 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("LastModifiedOn")
-                        .HasColumnType("datetime2");
 
                     b.Property<Guid>("RoleId")
                         .HasColumnType("uniqueidentifier");
