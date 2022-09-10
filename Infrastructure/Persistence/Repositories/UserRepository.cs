@@ -14,9 +14,8 @@ using System.Threading.Tasks;
 
 namespace Persistence.Repositories
 {
-    public class UserRepository :  IUserRepository
+    public class UserRepository :  BaseRepository<User>, IUserRepository
     {
-        protected ApplicationContext _context;
         public UserRepository(ApplicationContext context)
         {
             _context = context;

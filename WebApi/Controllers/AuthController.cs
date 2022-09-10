@@ -29,7 +29,7 @@ namespace WebApi.Controllers
             _userService = userService;
         }
 
-        [HttpPost("token")]
+        /*[HttpPost("PatientLogin")]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(LoginResponseModel))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(ValidationResultModel))]
         public async Task<IActionResult> Token([FromBody] LoginRequestModel model)
@@ -87,9 +87,9 @@ namespace WebApi.Controllers
                 Status = false
             };
             return BadRequest(response);
-        }
+        }*/
 
-        [HttpPost("admin")]
+        [HttpPost("UserLogin")]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(LoginResponseModel))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(ValidationResultModel))]
         public async Task<IActionResult> AdminLogin([FromBody] LoginRequestModel model)
