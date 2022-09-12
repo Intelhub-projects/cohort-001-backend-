@@ -14,8 +14,8 @@ namespace Core.Appliaction.Interfaces.Services
 {
     public interface IReminderService
     {
-        Task<BaseResponse> CreateAsync(CreateReminder request);
+        Task<BaseResponse> CreateAsync(Guid userId, CreateReminder request);
         Task<PaginatedList<ReminderDto>> GetReminderByUserIdAsync(Guid userId, PaginationFilter filter);
-        Task<IEnumerable<UserDto>> GetAllReminderAsync();
+        Task<IEnumerable<ReminderDto>> GetAllReminderAsync();
     }
 }
