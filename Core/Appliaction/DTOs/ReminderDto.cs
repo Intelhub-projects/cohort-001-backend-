@@ -3,19 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.DTOs;
 using Core.Domain.Enums;
-using Domain.Contracts;
 
-namespace Core.Domain.Entities
+namespace Core.Appliaction.DTOs
 {
-    public class Reminder : AuditableEntity
+    public class ReminderDto
     {
-        public Guid UserId { get; set; }
-        public User User { get; set; }
+        public Guid Id { get; set; }
+        public Guid userId { get; set; }
+        public UserDto UserDto { get; set; }
         public string RemindFor { get; set; }
         public ReminderType ReminderType { get; set; }
         public ReminderStatus ReminderStatus { get; set; }
         public int? ReminderDays { get; set; }
-        public string RemindDateAndTime { get; set; }
+        public ICollection<DateTime> RemindDateAndTime { get; set; }
     }
 }
