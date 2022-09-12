@@ -32,6 +32,15 @@ namespace WebApi.Controllers
             return Ok(response);
         }
 
+        [HttpPost("CreatePatient")]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(CreatePatient))]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(ValidationResultModel))]
+        public async Task<IActionResult> CreatePatient([FromBody] CreatePatient model)
+        {
+            var response = await _userService.CreatePatient(model);
+            return Ok(response);
+        }
+
         [HttpGet("GetbyName")]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(BaseResponse))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(ValidationResultModel))]

@@ -19,5 +19,7 @@ namespace Application.Interfaces.Services
         public Task<AdminRoleResponseModel> GetRoleAsync(string name);
         public Task<List<AdminRoleResponseModel>> GetRolesAsync();
         public Task<IList<UsersInRoleResponseModel>> GetUsersByRoleAsync(string roleName);
+
+        public Task<BaseResponse> CreatePatient(CreatePatient request);
     }
 }

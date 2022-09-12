@@ -50,9 +50,9 @@ namespace Application.Implementations.Services
             {
                 UserName = request.UserName,
                 Email = request.UserName,
-                Firstname = request.FirstName,
+                FirstName = request.FirstName,
                 LastName = request.LastName,
-                Phone = request.PhoneNumber,
+                PhoneNumber = request.PhoneNumber,
                 CreatedBy = "fmkDev"
                 
             };
@@ -77,7 +77,7 @@ namespace Application.Implementations.Services
             {
                 Id = x.Id,
                 UserName = x.UserName,
-                FirstName = x.Firstname,
+                FirstName = x.FirstName,
                 LastName = x.LastName,
                 Roles = x.UserRoles.Select(r => new RoleDto
                 {
@@ -101,7 +101,7 @@ namespace Application.Implementations.Services
             {
                 Id = user.Id,
                 UserName = user.UserName,
-                FirstName = user.Firstname,
+                FirstName = user.FirstName,
                 LastName = user.LastName,
                 Roles = user.UserRoles.Select(r => new RoleDto
                 {
@@ -165,5 +165,47 @@ namespace Application.Implementations.Services
             return roles;
         }
 
+        public async Task<BaseResponse> CreatePatient(CreatePatient request)
+        {
+            var checkUserName = await _userRepository.AnyAsync(checkUserName => checkUserName.UserName == request.UserName);
+            
+            if (checkUserName)
+            {
+                throw new BadRequestException(UsersConstant.AlreadyExist);
+            }
+
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            var patient = new User
+            {
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                PhoneNumber = request.PhoneNumber,
+                UserName = request.UserName,
+                Email = request.Email,
+                Address = request.Address,
+                Password = request.Password,
+                
+
+            };
+
+            patient.Password = _identityService.GetPasswordHash(patient.Password);
+            var newPatient = await _userManager.CreateAsync(patient);
+            if (newPatient == null)
+            {
+                throw new Exception(UsersConstant.NotSuccessMessage);
+            }
+            var result = await _userManager.AddToRoleAsync(patient, "Patient");
+            return new BaseResponse
+            {
+                Message = UsersConstant.SuccessMessage,
+                Status = true
+            };
+
+
+        }
     }
 }
