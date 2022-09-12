@@ -118,7 +118,7 @@ namespace WebApi.Controllers
                     {
                         Roles = roles,
                         UserName = user.UserName,
-                        FirstName = user.Firstname,
+                        FirstName = user.FirstName,
                         LastName = user.LastName
                     }
                 };

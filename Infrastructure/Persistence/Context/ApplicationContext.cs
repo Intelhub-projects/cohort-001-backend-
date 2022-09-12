@@ -27,7 +27,7 @@ namespace Persistence.Context
                   new Role
                   {
                       Id = Guid.NewGuid(),
-                      Name = "Patients"
+                      Name = "Patient"
                   },
                    new Role
                    {

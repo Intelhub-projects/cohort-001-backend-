@@ -58,7 +58,7 @@ namespace Persistence.Repositories
                 {
                     Id = x.Id,
                     UserName = x.User.UserName,
-                    FirstName = x.User.Firstname,
+                    FirstName = x.User.FirstName,
                     LastName = x.User.LastName,
                     Roles = x.User.UserRoles.Select(u => new RoleDto
                     {
