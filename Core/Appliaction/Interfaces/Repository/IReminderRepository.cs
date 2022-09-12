@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Application.DTOs.Filters;
@@ -15,7 +16,7 @@ namespace Core.Appliaction.Interfaces.Repository
     public interface IReminderRepository : IRepository<Reminder>
     {
         Task<IEnumerable<ReminderDto>> GetAllRemindersByStatusAsync(ReminderStatus status);
-        Task<PaginatedList<ReminderDto>> GetAllUserReminderByStatusAsync(Guid userId, PaginationFilter filter);
+        Task<PaginatedList<ReminderDto>> GetAllUserReminderByStatusAsync(Expression<Func<Reminder, bool>> expression, PaginationFilter filter);
 
     }
 }
