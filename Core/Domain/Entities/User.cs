@@ -17,8 +17,7 @@ namespace Core.Domain.Entities
         public string Email { get; set; }
         public string Address { get; set; }
         public string PhoneNumber { get; set; }
-        public Gender Gender { get; set; }  
-        public RegistrationStatus RegistrationStatus { get; set; }
+        public Gender Gender { get; set; } 
         public ICollection<UserRole> UserRoles { get; set; } = new HashSet<UserRole>();
         public ICollection<Reminder> Reminders { get; set; } = new HashSet<Reminder>();
     }

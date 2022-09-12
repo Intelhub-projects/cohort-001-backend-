@@ -188,6 +188,7 @@ namespace Application.Implementations.Services
                 Email = request.Email,
                 Address = request.Address,
                 Password = request.Password,
+                Gender = request.Gender,
                 
 
             };

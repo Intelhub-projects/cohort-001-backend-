@@ -158,7 +158,7 @@ namespace Persistence.Identity
             {
                 throw new ArgumentNullException(nameof(user));
             }
-            return Task.FromResult(user.Phone);
+            return Task.FromResult(user.PhoneNumber);
         }
 
         public Task<bool> GetPhoneNumberConfirmedAsync(User user, CancellationToken cancellationToken)
@@ -316,7 +316,7 @@ namespace Persistence.Identity
             {
                 throw new ArgumentNullException(nameof(user));
             }
-            user.Phone = phoneNumber;
+            user.PhoneNumber = phoneNumber;
             return Task.CompletedTask;
         }
 

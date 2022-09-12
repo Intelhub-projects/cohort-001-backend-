@@ -12,8 +12,8 @@ using Persistence.Context;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20220910172158_first1")]
-    partial class first1
+    [Migration("20220912152402_first")]
+    partial class first
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -110,26 +110,26 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("a8556f8e-d46e-4903-ae82-a83b0cb33303"),
-                            CreatedOn = new DateTime(2022, 9, 10, 17, 21, 57, 884, DateTimeKind.Utc).AddTicks(6172),
+                            Id = new Guid("96105871-81d0-46ef-874d-a3a3cb156459"),
+                            CreatedOn = new DateTime(2022, 9, 12, 15, 24, 1, 551, DateTimeKind.Utc).AddTicks(2007),
                             IsDeleted = false,
-                            LastModifiedOn = new DateTime(2022, 9, 10, 17, 21, 57, 884, DateTimeKind.Utc).AddTicks(6175),
+                            LastModifiedOn = new DateTime(2022, 9, 12, 15, 24, 1, 551, DateTimeKind.Utc).AddTicks(2012),
                             Name = "Admin"
                         },
                         new
                         {
-                            Id = new Guid("72249e3d-c272-4339-bdf8-157d21080ec3"),
-                            CreatedOn = new DateTime(2022, 9, 10, 17, 21, 57, 884, DateTimeKind.Utc).AddTicks(6674),
+                            Id = new Guid("8d8c62c1-9e28-4826-b647-487724f089b0"),
+                            CreatedOn = new DateTime(2022, 9, 12, 15, 24, 1, 551, DateTimeKind.Utc).AddTicks(2079),
                             IsDeleted = false,
-                            LastModifiedOn = new DateTime(2022, 9, 10, 17, 21, 57, 884, DateTimeKind.Utc).AddTicks(6674),
-                            Name = "Patients"
+                            LastModifiedOn = new DateTime(2022, 9, 12, 15, 24, 1, 551, DateTimeKind.Utc).AddTicks(2080),
+                            Name = "Patient"
                         },
                         new
                         {
-                            Id = new Guid("4e8dfd34-b32a-455d-8299-f67e50a6386b"),
-                            CreatedOn = new DateTime(2022, 9, 10, 17, 21, 57, 884, DateTimeKind.Utc).AddTicks(6680),
+                            Id = new Guid("2ea63104-fad2-4c97-97cf-12f04653483d"),
+                            CreatedOn = new DateTime(2022, 9, 12, 15, 24, 1, 551, DateTimeKind.Utc).AddTicks(2091),
                             IsDeleted = false,
-                            LastModifiedOn = new DateTime(2022, 9, 10, 17, 21, 57, 884, DateTimeKind.Utc).AddTicks(6680),
+                            LastModifiedOn = new DateTime(2022, 9, 12, 15, 24, 1, 551, DateTimeKind.Utc).AddTicks(2092),
                             Name = "Staff"
                         });
                 });
@@ -139,6 +139,9 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -155,7 +158,7 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Firstname")
+                    b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Gender")
@@ -176,11 +179,8 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Phone")
+                    b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("RegistrationStatus")
-                        .HasColumnType("int");
 
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");

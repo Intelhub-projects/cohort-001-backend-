@@ -142,7 +142,7 @@ namespace Persistence.Identity
             {
                 UserName = user.UserName,
                 Email = user.Email,
-                Firstname = user.Firstname,
+                FirstName = user.FirstName,
                 LastName = user.LastName
             };
         }
