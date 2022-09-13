@@ -41,10 +41,10 @@ namespace Persistence.Repositories
             return await _context.Roles.AsNoTracking().FirstOrDefaultAsync(expression);
         }
 
-        public async Task<User> GetUserAndRoles(string userName)
+        public async Task<User> GetUserAndRoles(Guid userId)
         {
             var user = await _context.Users.Include(r => r.UserRoles)
-                .ThenInclude(r => r.Role).FirstOrDefaultAsync(u => u.UserName == userName);
+                .ThenInclude(r => r.Role).FirstOrDefaultAsync(u => u.Id == userId);
             return user;
         }
 
