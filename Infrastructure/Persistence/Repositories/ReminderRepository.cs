@@ -24,9 +24,22 @@ namespace Infrastructure.Persistence.Repositories
             _context = context;
         }
 
-        public Task<IEnumerable<ReminderDto>> GetAllRemindersByStatusAsync(ReminderStatus status)
+        public async Task<IEnumerable<ReminderDto>> GetAllRemindersByStatusAsync(ReminderStatus status)
         {
-            throw new NotImplementedException();
+            var reminders = await _context.Reminders.Include(u => u.User).Include(rt=> rt.ReminderType).Where(x => x.ReminderStatus == status).Select(reminder => new ReminderDto
+            {
+
+                RemindDateAndTime = ConverToDateTime(reminder.RemindDateAndTime),
+                ReminderDays = reminder.ReminderDays,
+                ReminderStatus = reminder.ReminderStatus,
+                ReminderType = reminder.ReminderType,
+                RemindFor = reminder.RemindFor,
+                userId = reminder.UserId,
+
+
+            }).ToListAsync();
+
+            return reminders;
         }
 
         public async Task<PaginatedList<ReminderDto>> GetAllUserReminderByStatusAsync(Expression<Func<Reminder, bool>> expression, PaginationFilter filter)

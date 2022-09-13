@@ -9,6 +9,7 @@ using Application.Wrapper;
 using Core.Appliaction.DTOs;
 using Core.Appliaction.DTOs.RequestModel;
 using Core.Appliaction.DTOs.ResponseModel;
+using Core.Domain.Enums;
 
 namespace Core.Appliaction.Interfaces.Services
 {
@@ -17,5 +18,6 @@ namespace Core.Appliaction.Interfaces.Services
         Task<BaseResponse> CreateAsync(Guid userId, CreateReminder request);
         Task<PaginatedList<ReminderDto>> GetReminderByUserIdAsync(Guid userId, PaginationFilter filter);
         Task<IEnumerable<ReminderDto>> GetAllReminderAsync();
+        Task<IList<Result<ReminderDto>>> GetAllRemindersByStatusAsync(ReminderStatus status);
     }
 }
