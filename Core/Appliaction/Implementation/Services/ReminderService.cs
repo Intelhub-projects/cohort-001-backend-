@@ -97,9 +97,16 @@ namespace Core.Appliaction.Implementation.Services
    
         }
 
-        public Task<PaginatedList<ReminderDto>> GetReminderByUserIdAsync(Guid userId, PaginationFilter filter)
+        public async Task<PaginatedList<ReminderDto>> GetOnboardReminderByUserIdAsync(Guid userId, PaginationFilter filter)
         {
-            throw new NotImplementedException();
+            var doneReminders = await _reminderRepository.GetAllUserReminderByStatusAsync(u => u.Id == userId && u.ReminderStatus == ReminderStatus.Onboard, filter);
+            return doneReminders;
+        }
+
+        public async Task<PaginatedList<ReminderDto>> GetDoneReminderByUserIdAsync(Guid userId, PaginationFilter filter)
+        {
+            var doneReminders = await _reminderRepository.GetAllUserReminderByStatusAsync(u => u.Id == userId && u.ReminderStatus == ReminderStatus.Done, filter);
+            return doneReminders;
         }
     }
 }
