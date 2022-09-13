@@ -7,10 +7,12 @@ using Application.DTOs;
 using Application.DTOs.Filters;
 using Application.Interfaces.Repositories;
 using Application.Wrapper;
+using Core.Appliaction.Constants;
 using Core.Appliaction.DTOs;
 using Core.Appliaction.DTOs.RequestModel;
 using Core.Appliaction.Interfaces.Repository;
 using Core.Appliaction.Interfaces.Services;
+using Core.Domain.Enums;
 
 namespace Core.Appliaction.Implementation.Services
 {
@@ -33,6 +35,17 @@ namespace Core.Appliaction.Implementation.Services
         public Task<IEnumerable<ReminderDto>> GetAllReminderAsync()
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<IList<Result<ReminderDto>>> GetAllRemindersByStatusAsync(ReminderStatus status)
+        {
+            var reminderStatus = await _reminderRepository.GetAllRemindersByStatusAsync(status);
+
+            if (reminderStatus != null)
+            {
+                return await <IEnumerable<Result<ReminderDto>>.SuccessAsync(ReminderConstant.SuccessMessage)
+            }
+   
         }
 
         public Task<PaginatedList<ReminderDto>> GetReminderByUserIdAsync(Guid userId, PaginationFilter filter)
