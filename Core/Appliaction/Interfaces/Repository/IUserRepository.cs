@@ -15,6 +15,6 @@ namespace Application.Interfaces.Repositories
         public Task<IList<UsersInRoleResponseModel>> GetUsersInRoleAsync(string roleName);
         public Task<bool> AnyAsync(Expression<Func<Role, bool>> expression);
         public Task<Role> GetAsync(Expression<Func<Role, bool>> expression);
-        public Task<User> GetUserAndRoles(string userName);
+        public Task<User> GetUserAndRoles(Guid userId);
     }
 }
