@@ -12,7 +12,11 @@ using Core.Appliaction.DTOs;
 using Core.Appliaction.DTOs.RequestModel;
 using Core.Appliaction.Interfaces.Repository;
 using Core.Appliaction.Interfaces.Services;
+
 using Core.Domain.Enums;
+
+using Core.Domain.Entities;
+
 
 namespace Core.Appliaction.Implementation.Services
 {
@@ -27,10 +31,54 @@ namespace Core.Appliaction.Implementation.Services
             _userRepository = userRepository;
         }
 
-        public Task<BaseResponse> CreateAsync(Guid userId, CreateReminder request)
+        public async Task<BaseResponse> CreateAsync(Guid userId, CreateReminder request)
         {
-            throw new NotImplementedException();
+            if (!await _userRepository.AnyAsync(u => u.Id == userId) || request == null)
+            {
+                return new BaseResponse
+                {
+                    Message = "Request Fail, Check User Id and request",
+                    Status = false
+                };
+            }
+            var user = await _userRepository.GetUserAndRoles(userId);
+
+            var reminder = new Reminder
+            {
+                UserId = userId,
+                RemindFor = request.RemindFor,
+                ReminderStatus = Domain.Enums.ReminderStatus.Onboard,
+                ReminderType = request.ReminderType,
+                ReminderDays = request.ReminderDays
+            };
+            reminder.RemindDateAndTime = ConvertToString(request.RemindDateAndTime);
+            var response = await _reminderRepository.AddAsync(reminder);
+            if(reminder == null)
+            {
+                return new BaseResponse
+                {
+                    Message = "Creation Failed",
+                    Status = false
+                };
+            }
+            return new BaseResponse
+            {
+                Message = $"Succesfully Crete Reminder for {request.RemindFor}",
+                Status = true
+            };
         }
+
+        private string ConvertToString(ICollection<DateTime> remindDateAndTime)
+        {
+            string a = "";
+            foreach (var item in remindDateAndTime)
+            {
+                a += (Convert.ToString(item) + "  ");
+            }
+            return a;
+        }
+    
+        
 
         public Task<IEnumerable<ReminderDto>> GetAllReminderAsync()
         {
