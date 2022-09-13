@@ -43,8 +43,9 @@ namespace Core.Appliaction.Implementation.Services
 
             if (reminderStatus != null)
             {
-                return await <IEnumerable<Result<ReminderDto>>.SuccessAsync(ReminderConstant.SuccessMessage)
+                return (IList<Result<ReminderDto>>)await Result<ReminderDto>.SuccessAsync(ReminderConstant.SuccessMessage);
             }
+            return (IList<Result<ReminderDto>>)reminderStatus;
    
         }
 

@@ -18,6 +18,6 @@ namespace Core.Appliaction.Interfaces.Services
         Task<BaseResponse> CreateAsync(Guid userId, CreateReminder request);
         Task<PaginatedList<ReminderDto>> GetReminderByUserIdAsync(Guid userId, PaginationFilter filter);
         Task<IEnumerable<ReminderDto>> GetAllReminderAsync();
-        Task<IEnumerable<Result<ReminderDto>>> GetAllRemindersByStatusAsync(ReminderStatus status);
+        Task<IList<Result<ReminderDto>>> GetAllRemindersByStatusAsync(ReminderStatus status);
     }
 }
