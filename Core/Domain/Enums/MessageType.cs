@@ -9,7 +9,7 @@ namespace Core.Domain.Enums
 {
     public enum MessageType
     {
-        [Description("Registrtaion")]
+        [Description("Registration")]
         RegistrationMessage = 1,
 
 

@@ -40,7 +40,7 @@ namespace Persistence.Context
                 {
                     Id = Guid.NewGuid(),
                     MessageType = Core.Domain.Enums.MessageType.RegistrationMessage,
-                    text = "Welcome to MedPharm! We're glad you are here. Enjoy our distinct healthcare offers..."
+                    Text = "Welcome to MedPharm! We're glad you are here. Enjoy our distinct healthcare offers..."
                     
                 }
 

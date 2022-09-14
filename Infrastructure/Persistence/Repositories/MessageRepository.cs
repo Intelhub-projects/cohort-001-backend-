@@ -20,29 +20,30 @@ namespace Infrastructure.Persistence.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<MessageDto>> GetAllMessages()
+        public async Task<IEnumerable<Message>> GetAllMessages()
         {
-            var messages = await _context.Messages.Include(type => type.MessageType).Select(message => new MessageDto
+            var messages = await _context.Messages.Select(message => new Message
             {
-                text = message.text,
-                MessageType = message.MessageType
+                Text = message.Text,
+                MessageType = message.MessageType,
+                
 
             }).ToListAsync();
 
             return messages;
         }
 
-        public async Task<MessageDto> GetMessageByType(MessageType messageType)
+        public async Task<IEnumerable<Message>> GetMessageByType(MessageType messageType)
         {
-            var message = _context.Messages.Where(type => type.MessageType == messageType).Select(message => new MessageDto
+            var messages = await _context.Messages.Where(type => type.MessageType == messageType).Select(message => new Message
             {
-
-                text = message.text,
+               
+                Text = message.Text,
                 MessageType = message.MessageType
 
-            });
+            }).ToListAsync();
 
-            return (MessageDto)message;
+            return messages;
             
         }
     }

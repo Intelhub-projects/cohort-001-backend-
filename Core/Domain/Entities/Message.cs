@@ -10,8 +10,8 @@ namespace Core.Domain.Entities
 {
     public class Message: AuditableEntity
     {
-        public Guid UserId { get; set; }
-        public string text { get; set; }
+        
+        public string Text { get; set; }
         public MessageType MessageType { get; set; }
     }
 }

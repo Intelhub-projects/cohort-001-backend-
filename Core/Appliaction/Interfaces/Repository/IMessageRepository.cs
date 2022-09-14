@@ -12,8 +12,8 @@ namespace Core.Appliaction.Interfaces.Repository
 {
     public interface IMessageRepository
     {
-        Task<MessageDto> GetMessageByType(MessageType messageType);
-        Task<IEnumerable<MessageDto>> GetAllMessages();
+        Task<IEnumerable<Message>> GetMessageByType(MessageType messageType);
+        Task<IEnumerable<Message>> GetAllMessages();
 
     }
 }

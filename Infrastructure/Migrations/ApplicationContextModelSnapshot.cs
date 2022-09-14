@@ -52,10 +52,7 @@ namespace Infrastructure.Migrations
                     b.Property<int>("MessageType")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("text")
+                    b.Property<string>("Text")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -65,13 +62,12 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("7d2a26f7-33bb-46e6-b909-dc6f3c7f7fe5"),
-                            CreatedOn = new DateTime(2022, 9, 14, 13, 40, 39, 605, DateTimeKind.Utc).AddTicks(5762),
+                            Id = new Guid("ed99b005-1c20-4abb-b53b-dce0bc1be41e"),
+                            CreatedOn = new DateTime(2022, 9, 14, 14, 50, 54, 213, DateTimeKind.Utc).AddTicks(6622),
                             IsDeleted = false,
-                            LastModifiedOn = new DateTime(2022, 9, 14, 13, 40, 39, 605, DateTimeKind.Utc).AddTicks(5764),
+                            LastModifiedOn = new DateTime(2022, 9, 14, 14, 50, 54, 213, DateTimeKind.Utc).AddTicks(6624),
                             MessageType = 1,
-                            UserId = new Guid("00000000-0000-0000-0000-000000000000"),
-                            text = "Welcome to MedPharm! We're glad you are here. Enjoy our distinct healthcare offers..."
+                            Text = "Welcome to MedPharm! We're glad you are here. Enjoy our distinct healthcare offers..."
                         });
                 });
 
@@ -164,26 +160,26 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("5db65f72-d066-43d4-aeff-94bb91fc77f3"),
-                            CreatedOn = new DateTime(2022, 9, 14, 13, 40, 39, 605, DateTimeKind.Utc).AddTicks(5374),
+                            Id = new Guid("0fccbfcb-a71b-4541-841f-1803e7971bb1"),
+                            CreatedOn = new DateTime(2022, 9, 14, 14, 50, 54, 213, DateTimeKind.Utc).AddTicks(5900),
                             IsDeleted = false,
-                            LastModifiedOn = new DateTime(2022, 9, 14, 13, 40, 39, 605, DateTimeKind.Utc).AddTicks(5379),
+                            LastModifiedOn = new DateTime(2022, 9, 14, 14, 50, 54, 213, DateTimeKind.Utc).AddTicks(5904),
                             Name = "Admin"
                         },
                         new
                         {
-                            Id = new Guid("60bb6e55-5a89-4be4-a139-a166e76c568a"),
-                            CreatedOn = new DateTime(2022, 9, 14, 13, 40, 39, 605, DateTimeKind.Utc).AddTicks(5445),
+                            Id = new Guid("8a5f9b72-45e3-4d38-88f5-ce6a0dfd8c79"),
+                            CreatedOn = new DateTime(2022, 9, 14, 14, 50, 54, 213, DateTimeKind.Utc).AddTicks(6117),
                             IsDeleted = false,
-                            LastModifiedOn = new DateTime(2022, 9, 14, 13, 40, 39, 605, DateTimeKind.Utc).AddTicks(5446),
+                            LastModifiedOn = new DateTime(2022, 9, 14, 14, 50, 54, 213, DateTimeKind.Utc).AddTicks(6118),
                             Name = "Patient"
                         },
                         new
                         {
-                            Id = new Guid("0ef0d442-e622-450a-8f8b-d58696978af1"),
-                            CreatedOn = new DateTime(2022, 9, 14, 13, 40, 39, 605, DateTimeKind.Utc).AddTicks(5457),
+                            Id = new Guid("8567af00-a7a3-4905-9059-824f765f6900"),
+                            CreatedOn = new DateTime(2022, 9, 14, 14, 50, 54, 213, DateTimeKind.Utc).AddTicks(6138),
                             IsDeleted = false,
-                            LastModifiedOn = new DateTime(2022, 9, 14, 13, 40, 39, 605, DateTimeKind.Utc).AddTicks(5458),
+                            LastModifiedOn = new DateTime(2022, 9, 14, 14, 50, 54, 213, DateTimeKind.Utc).AddTicks(6139),
                             Name = "Staff"
                         });
                 });
