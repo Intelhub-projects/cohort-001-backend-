@@ -35,8 +35,6 @@ namespace Infrastructure.Persistence.Repositories
                 ReminderType = reminder.ReminderType,
                 RemindFor = reminder.RemindFor,
                 userId = reminder.UserId,
-
-
             }).ToListAsync();
 
             return reminders;
@@ -57,7 +55,7 @@ namespace Infrastructure.Persistence.Repositories
 
         private ICollection<DateTime> ConverToDateTime(string remindDateAndTime)
         {
-            var a = remindDateAndTime.Split(" ");
+            var a = remindDateAndTime.Split("  ");
             List<DateTime> date = new List<DateTime>();
             foreach (var item in a)
             {

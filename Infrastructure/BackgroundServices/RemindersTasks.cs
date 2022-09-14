@@ -41,8 +41,8 @@ namespace Infrastructure.BackgroundServices
                 {
                     using (var scope = _serviceScopeFactory.CreateScope())
                     {
-                        var userService = scope.ServiceProvider.GetRequiredService<IReminderService>();
-                        await userService.GetAllRemindersByStatusAsync(Core.Domain.Enums.ReminderStatus.Onboard);
+                        var reminderService = scope.ServiceProvider.GetRequiredService<IReminderService>();
+                        reminderService.SendAlert();
                     }
 
                 }
@@ -59,6 +59,5 @@ namespace Infrastructure.BackgroundServices
 
             }
         }
-        private 
     }
 }

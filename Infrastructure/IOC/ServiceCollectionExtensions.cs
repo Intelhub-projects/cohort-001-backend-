@@ -4,8 +4,11 @@ using Application.Interfaces.Identity;
 using Application.Interfaces.Repositories;
 using Application.Interfaces.Services;
 using Core.Domain.Entities;
+using Infrastructure.BackgroundServices;
+using Infrastructure.BackgroundServices.Configuration;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence.Context;
 using Persistence.Identity;
@@ -28,13 +31,16 @@ namespace IOC
             return services;
         }
 
-        public static IServiceCollection AddCustomIdentity(this IServiceCollection services)
+        public static IServiceCollection AddCustomIdentity(this IServiceCollection services, IConfiguration Configuration)
         {
             services.AddScoped<IUserStore<User>, UserStore>();
             services.AddScoped<IRoleStore<Role>, RoleStore>();
             services.AddIdentity<User, Role>()
                 .AddDefaultTokenProviders();
             services.AddScoped<IIdentityService, IdentityService>();
+
+            services.Configure<MedPharmCronExpressionConfig>(Configuration.GetSection("SmsBackgroundConfiguration"));
+            services.AddHostedService<RemindersTasks>();
             return services;
         }
 
