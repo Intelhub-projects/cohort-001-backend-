@@ -71,9 +71,9 @@ namespace Core.Appliaction.Implementation.Services
         private string ConvertToString(ICollection<DateTime> remindDateAndTime)
         {
             string a = "";
-            foreach (var item in remindDateAndTime)
+            foreach (var date in remindDateAndTime)
             {
-                a += (Convert.ToString(item) + "  ");
+                a += (Convert.ToString(date) + "  ");
             }
             return a;
         }
@@ -85,15 +85,10 @@ namespace Core.Appliaction.Implementation.Services
             throw new NotImplementedException();
         }
 
-        public async Task<IList<Result<ReminderDto>>> GetAllRemindersByStatusAsync(ReminderStatus status)
+        public async Task<IEnumerable<ReminderDto>> GetAllRemindersByStatusAsync(ReminderStatus status)
         {
-            var reminderStatus = await _reminderRepository.GetAllRemindersByStatusAsync(status);
+            return await _reminderRepository.GetAllRemindersByStatusAsync(status);
 
-            if (reminderStatus != null)
-            {
-                return (IList<Result<ReminderDto>>)await Result<ReminderDto>.SuccessAsync(ReminderConstant.SuccessMessage);
-            }
-            return (IList<Result<ReminderDto>>)reminderStatus;
    
         }
 
