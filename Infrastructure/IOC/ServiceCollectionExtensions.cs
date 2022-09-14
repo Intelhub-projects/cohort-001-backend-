@@ -3,7 +3,11 @@ using Application.Implementations.Services;
 using Application.Interfaces.Identity;
 using Application.Interfaces.Repositories;
 using Application.Interfaces.Services;
+using Core.Appliaction.Implementation.Services;
+using Core.Appliaction.Interfaces.Repository;
+using Core.Appliaction.Interfaces.Services;
 using Core.Domain.Entities;
+using Infrastructure.Persistence.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,11 +22,15 @@ namespace IOC
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IReminderService, ReminderService>();
+            services.AddScoped<IResponseService, ResponseService>();
             return services;
         }
         
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IReminderRepository, ReminderRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
 
             return services;
