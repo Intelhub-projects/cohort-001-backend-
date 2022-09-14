@@ -31,7 +31,7 @@ namespace IOC
         {
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IReminderRepository, ReminderRepository>();
-            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IMessageRepository, MessageRepository>();
 
             return services;
         }
