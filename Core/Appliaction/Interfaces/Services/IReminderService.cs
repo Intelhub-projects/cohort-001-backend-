@@ -19,6 +19,6 @@ namespace Core.Appliaction.Interfaces.Services
         Task<PaginatedList<ReminderDto>> GetOnboardReminderByUserIdAsync(Guid userId, PaginationFilter filter);
         Task<PaginatedList<ReminderDto>> GetDoneReminderByUserIdAsync(Guid userId, PaginationFilter filter);
         Task<IEnumerable<ReminderDto>> GetAllReminderAsync();
-        Task<IList<Result<ReminderDto>>> GetAllRemindersByStatusAsync(ReminderStatus status);
+        Task<IEnumerable<ReminderDto>> GetAllRemindersByStatusAsync(ReminderStatus status);
     }
 }
