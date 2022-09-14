@@ -9,6 +9,6 @@ namespace Core.Appliaction.Interfaces.Services
 {
     public interface IResponseService
     {
-        public Task<BaseResponse> SendResponse(string phoneNumber);
+        public Task<BaseResponse> SendResponse(string phoneNumber, string messageSubject);
     }
 }

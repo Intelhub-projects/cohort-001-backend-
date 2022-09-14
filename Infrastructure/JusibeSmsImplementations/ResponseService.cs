@@ -24,13 +24,12 @@ namespace Core.Appliaction.Implementation.Services
             _configuration = configuration;
         }
 
-        public async Task<BaseResponse> SendResponse(string phoneNumber)
+        public async Task<BaseResponse> SendResponse(string phoneNumber, string messageSubject)
         {
             var publicKey = _configuration.GetSection("SmsConfiguration")["publicKey"];
             var accessToken = _configuration.GetSection("SmsConfiguration")["accessToken"];
-            string message = "This is a test message";
-            SmsSender sender = new SmsSender(publicKey, accessToken, "farhaat");
-            var result = await sender.SendSms(phoneNumber, message);
+            SmsSender sender = new SmsSender(publicKey, accessToken, "MedPharm");
+            var result = await sender.SendSms(phoneNumber, messageSubject);
 
             if (!result) return new BaseResponse
             {
