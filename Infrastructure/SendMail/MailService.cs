@@ -27,13 +27,13 @@ namespace Infrastructure.SendMail
                     ));
 
                     message.To.Add(new MailboxAddress(
-                       $"{recipientMail}",
-                        "[REPLACE WITH DESIRED TO EMAIL]"
+                       $"{recipientName}",
+                        $"{recipientMail}"
                     ));
-                    message.Subject = "Sending with Twilio SendGrid is Fun";
+                    message.Subject = "Because Your Life Matters";
                     var bodyBuilder = new BodyBuilder
                     {
-                        TextBody = "and easy to do anywhere, especially with C#",
+                        TextBody = $"{text}",
                         HtmlBody = "and easy to do anywhere, <b>especially with C#</b>"
                     };
                     message.Body = bodyBuilder.ToMessageBody();
