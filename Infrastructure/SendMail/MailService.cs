@@ -34,7 +34,7 @@ namespace Infrastructure.SendMail
                     var bodyBuilder = new BodyBuilder
                     {
                         TextBody = $"{text}",
-                        HtmlBody = "and easy to do anywhere, <b>especially with C#</b>"
+                        HtmlBody = "Believe in We, <b>IntelHub MedPharm Care</b>"
                     };
                     message.Body = bodyBuilder.ToMessageBody();
 
