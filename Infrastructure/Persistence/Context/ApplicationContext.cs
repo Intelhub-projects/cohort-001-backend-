@@ -35,6 +35,17 @@ namespace Persistence.Context
                        Name = "Staff"
                    }
                 );
+            builder.Entity<Message>().HasData(
+                new Message
+                {
+                    Id = Guid.NewGuid(),
+                    MessageType = Core.Domain.Enums.MessageType.RegistrationMessage,
+                    Text = "Welcome to MedPharm! We're glad you are here. Enjoy our distinct healthcare offers..."
+                    
+                }
+
+
+                );
 
                 builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
@@ -77,5 +88,6 @@ namespace Persistence.Context
         public DbSet<Role> Roles {get; set;}
         public DbSet<UserRole> UserRoles {get; set;}
         public DbSet<Reminder> Reminders {get; set;}
+        public DbSet<Message> Messages { get; set; }
     }
 }

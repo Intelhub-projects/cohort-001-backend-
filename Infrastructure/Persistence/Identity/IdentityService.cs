@@ -167,7 +167,7 @@ namespace Persistence.Identity
             {
                 throw new ArgumentNullException(nameof(user));
             }
-            var roles = await _userRepository.GetUserAndRoles(user.UserName);
+            var roles = await _userRepository.GetUserAndRoles(user.Id);
 
             return roles.UserRoles.Select(role => role.Role.Name ).ToList();
         }
