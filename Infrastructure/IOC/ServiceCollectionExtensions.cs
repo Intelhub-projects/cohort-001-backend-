@@ -17,6 +17,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Persistence.Context;
 using Persistence.Identity;
 using Persistence.Repositories;
+using Infrastructure.SendMail;
 
 namespace IOC
 {
@@ -28,6 +29,7 @@ namespace IOC
             services.AddScoped<IReminderService, ReminderService>();
             services.AddScoped<IResponseService, ResponseService>();
             services.AddScoped<IMessageService, MessageService>();
+            services.AddScoped<IMailService, MailService>();
             return services;
         }
         
