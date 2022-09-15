@@ -96,10 +96,20 @@ namespace Core.Appliaction.Implementation.Services
         public async void SendAlert()
         {
             var reminders = await _reminderRepository.GetAllRemindersByStatusAsync(ReminderStatus.Onboard);
-            foreach(var reminder in reminders)
+            var nonDaily = reminders.Where(t => t.ReminderType == ReminderType.NonDaily);
+            var daily = reminders.Where(t => t.ReminderType == ReminderType.Daily);
+
+            WorkOnDailyReminder(daily);
+            WorkOnNonDailyReminder(nonDaily);
+           
+        }
+
+        private async void WorkOnDailyReminder(IEnumerable<ReminderDto> dailyReminder)
+        {
+            foreach (var reminder in dailyReminder)
             {
-                var time = reminder.RemindDateAndTime.Any(d => d.AddSeconds(-1 * d.Second) == DateTime.Now.AddSeconds(-1 * DateTime.Now.Second));
-                if(!time)
+                var time = reminder.RemindDateAndTime.Any(d => d.ToString("HH:mm") == DateTime.Now.ToString("HH:mm"));
+                if (!time)
                 {
                     continue;
                 }
@@ -114,14 +124,41 @@ namespace Core.Appliaction.Implementation.Services
                         ReminderStatus = ReminderStatus.Done,
                         ReminderDays = reminder.ReminderDays,
                         ReminderType = reminder.ReminderType,
-                        RemindFor = reminder.RemindFor,                        
+                        RemindFor = reminder.RemindFor,
                     };
                     remind.RemindDateAndTime = ConvertToString(reminder.RemindDateAndTime);
                     await _reminderRepository.UpdateAsync(remind);
                 }
             }
         }
-
+        private async void WorkOnNonDailyReminder(IEnumerable<ReminderDto> dailyReminder)
+        {
+            foreach (var reminder in dailyReminder)
+            {
+                var time = reminder.RemindDateAndTime.Any(d => d.AddSeconds(-1 * d.Second) == DateTime.Now.AddSeconds(-1 * DateTime.Now.Second));
+                if (!time)
+                {
+                    continue;
+                }
+                var user = await _userRepository.GetUserAndRoles(reminder.userId);
+                await _sms.SendResponse(user.PhoneNumber, reminder.RemindFor);
+                if (reminder.RemindDateAndTime.Any(d => d.Date < DateTime.Now.Date))
+                {
+                    var remind = new Reminder
+                    {
+                        Id = reminder.Id,
+                        UserId = reminder.userId,
+                        ReminderStatus = ReminderStatus.Done,
+                        ReminderDays = reminder.ReminderDays,
+                        ReminderType = reminder.ReminderType,
+                        RemindFor = reminder.RemindFor,
+                    };
+                    remind.RemindDateAndTime = ConvertToString(reminder.RemindDateAndTime);
+                    await _reminderRepository.UpdateAsync(remind);
+                }
+            }
+        }
+        
         public async Task<PaginatedList<ReminderDto>> GetOnboardReminderByUserIdAsync(Guid userId, PaginationFilter filter)
         {
             var doneReminders = await _reminderRepository.GetAllUserReminderByStatusAsync(u => u.Id == userId && u.ReminderStatus == ReminderStatus.Onboard, filter);
