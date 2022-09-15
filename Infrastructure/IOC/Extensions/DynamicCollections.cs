@@ -12,7 +12,7 @@ namespace IOC.Extensions
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration config)
         {
-            services.AddCustomIdentity()
+            services.AddCustomIdentity(config)
                 .AddRepositories()
                 .AddServices();
             return services;

@@ -24,11 +24,13 @@ namespace Core.Appliaction.Implementation.Services
     {
         private readonly IReminderRepository _reminderRepository;
         private readonly IUserRepository _userRepository;
+        private readonly IResponseService _sms;
 
-        public ReminderService(IReminderRepository reminderRepository, IUserRepository userRepository)
+        public ReminderService(IReminderRepository reminderRepository, IUserRepository userRepository, IResponseService sms)
         {
             _reminderRepository = reminderRepository;
             _userRepository = userRepository;
+            _sms = sms;
         }
 
         public async Task<BaseResponse> CreateAsync(Guid userId, CreateReminder request)
@@ -88,8 +90,36 @@ namespace Core.Appliaction.Implementation.Services
         public async Task<IEnumerable<ReminderDto>> GetAllRemindersByStatusAsync(ReminderStatus status)
         {
             return await _reminderRepository.GetAllRemindersByStatusAsync(status);
-
    
+        }
+
+        public async void SendAlert()
+        {
+            var reminders = await _reminderRepository.GetAllRemindersByStatusAsync(ReminderStatus.Onboard);
+            foreach(var reminder in reminders)
+            {
+                var time = reminder.RemindDateAndTime.Any(d => d.AddSeconds(-1 * d.Second) == DateTime.Now.AddSeconds(-1 * DateTime.Now.Second));
+                if(!time)
+                {
+                    continue;
+                }
+                var user = await _userRepository.GetUserAndRoles(reminder.userId);
+                await _sms.SendResponse(user.PhoneNumber, reminder.RemindFor);
+                if (reminder.RemindDateAndTime.Any(d => d.Date < DateTime.Now.Date))
+                {
+                    var remind = new Reminder
+                    {
+                        Id = reminder.Id,
+                        UserId = reminder.userId,
+                        ReminderStatus = ReminderStatus.Done,
+                        ReminderDays = reminder.ReminderDays,
+                        ReminderType = reminder.ReminderType,
+                        RemindFor = reminder.RemindFor,                        
+                    };
+                    remind.RemindDateAndTime = ConvertToString(reminder.RemindDateAndTime);
+                    await _reminderRepository.UpdateAsync(remind);
+                }
+            }
         }
 
         public async Task<PaginatedList<ReminderDto>> GetOnboardReminderByUserIdAsync(Guid userId, PaginationFilter filter)
