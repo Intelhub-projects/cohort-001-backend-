@@ -9,7 +9,7 @@ namespace Core.Appliaction.Interfaces.Services
 {
     public interface IMailService
     {
-        public Task <BaseResponse> SendWelcomeMailToNewPatient(string text, User recipientMail);
+        public Task <BaseResponse> SendWelcomeMailToNewPatient(string recipientName, string recipientMail, string text);
       
     }
 }
