@@ -17,6 +17,6 @@ namespace Core.Appliaction.DTOs
         public ReminderType ReminderType { get; set; }
         public ReminderStatus ReminderStatus { get; set; }
         public int? ReminderDays { get; set; }
-        public ICollection<DateTime> RemindDateAndTime { get; set; }
+        public ICollection<TaskDto> Tasks { get; set; }
     }
 }

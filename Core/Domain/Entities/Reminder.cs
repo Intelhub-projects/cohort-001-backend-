@@ -16,6 +16,6 @@ namespace Core.Domain.Entities
         public ReminderType ReminderType { get; set; }
         public ReminderStatus ReminderStatus { get; set; }
         public int? ReminderDays { get; set; }
-        public string RemindDateAndTime { get; set; }
+        public ICollection<MyTask> Tasks { get; set; } = new HashSet<MyTask>();
     }
 }

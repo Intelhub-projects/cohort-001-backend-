@@ -119,7 +119,7 @@ namespace Application.Implementations.Services
             {
                 throw new ArgumentNullException(nameof(request));
             }
-            var roleExist = await _userRepository.AnyAsync(r => r.Name == request.Name);
+            var roleExist = await _roleManager.RoleExistsAsync(request.Name);
             if(roleExist)
             {
                 throw new BadRequestException(UsersConstant.AlreadyExist);

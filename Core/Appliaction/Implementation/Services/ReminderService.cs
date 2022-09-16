@@ -16,7 +16,7 @@ using Core.Appliaction.Interfaces.Services;
 using Core.Domain.Enums;
 
 using Core.Domain.Entities;
-
+using Task = Core.Domain.Entities.MyTask;
 
 namespace Core.Appliaction.Implementation.Services
 {
@@ -25,12 +25,14 @@ namespace Core.Appliaction.Implementation.Services
         private readonly IReminderRepository _reminderRepository;
         private readonly IUserRepository _userRepository;
         private readonly IResponseService _sms;
+        private readonly ITaskRepository _task;
 
-        public ReminderService(IReminderRepository reminderRepository, IUserRepository userRepository, IResponseService sms)
+        public ReminderService(IReminderRepository reminderRepository, IUserRepository userRepository, IResponseService sms, ITaskRepository task)
         {
             _reminderRepository = reminderRepository;
             _userRepository = userRepository;
             _sms = sms;
+            _task = task;
         }
 
         public async Task<BaseResponse> CreateAsync(Guid userId, CreateReminder request)
@@ -52,11 +54,10 @@ namespace Core.Appliaction.Implementation.Services
                 RemindFor = request.RemindFor,
                 ReminderStatus = Domain.Enums.ReminderStatus.Onboard,
                 ReminderType = request.ReminderType,
-                ReminderDays = request.ReminderDays
+                ReminderDays = request.ReminderDays,
             };
-            reminder.RemindDateAndTime = ConvertToString(request.RemindDateAndTime);
             var response = await _reminderRepository.AddAsync(reminder);
-            if(reminder == null)
+            if (response.Id == Guid.Empty)
             {
                 return new BaseResponse
                 {
@@ -64,6 +65,18 @@ namespace Core.Appliaction.Implementation.Services
                     Status = false
                 };
             }
+            foreach (var t in request.Tasks)
+            {
+                var tas = new MyTask
+                {
+                    Todo = t.Todo,
+                    TodoTime = t.TodoTime,
+                    ReminderId = reminder.Id
+                };
+                await _task.AddAsync(tas);
+            }
+
+            
             return new BaseResponse
             {
                 Message = $"Succesfully Crete Reminder for {request.RemindFor}",
@@ -71,18 +84,7 @@ namespace Core.Appliaction.Implementation.Services
             };
         }
 
-        private string ConvertToString(ICollection<DateTime> remindDateAndTime)
-        {
-            string a = "";
-            foreach (var date in remindDateAndTime)
-            {
-                a += (Convert.ToString(date) + "  ");
-            }
-            return a;
-        }
-    
-        
-
+  
         public Task<IEnumerable<ReminderDto>> GetAllReminderAsync()
         {
             throw new NotImplementedException();
@@ -109,52 +111,34 @@ namespace Core.Appliaction.Implementation.Services
         {
             foreach (var reminder in dailyReminder)
             {
-                var time = reminder.RemindDateAndTime.Any(d => d.ToString("HH:mm") == DateTime.Now.ToString("HH:mm"));
+                var time = reminder.Tasks.Any(d => d.TodoTime.ToString("HH:mm") == DateTime.Now.ToString("HH:mm"));
                 if (!time)
                 {
                     continue;
                 }
                 var user = await _userRepository.GetUserAndRoles(reminder.userId);
-                await _sms.SendResponse(user.PhoneNumber, reminder.RemindFor);
-                if (reminder.RemindDateAndTime.Any(d => d.Date < DateTime.Now.Date))
-                {
-                    var remind = new Reminder
-                    {
-                        Id = reminder.Id,
-                        UserId = reminder.userId,
-                        ReminderStatus = ReminderStatus.Done,
-                        ReminderDays = reminder.ReminderDays,
-                        ReminderType = reminder.ReminderType,
-                        RemindFor = reminder.RemindFor,
-                    };
-                    remind.RemindDateAndTime = ConvertToString(reminder.RemindDateAndTime);
-                    await _reminderRepository.UpdateAsync(remind);
-                }
+                await _sms.SendResponse(user.PhoneNumber, reminder.RemindFor);               
+                
             }
         }
         private async void WorkOnNonDailyReminder(IEnumerable<ReminderDto> dailyReminder)
         {
             foreach (var reminder in dailyReminder)
             {
-                var time = reminder.RemindDateAndTime.Any(d => d.AddSeconds(-1 * d.Second) == DateTime.Now.AddSeconds(-1 * DateTime.Now.Second));
+                var time = reminder.Tasks.Any(d => d.TodoTime.AddSeconds(-1 * d.TodoTime.Second) == DateTime.Now.AddSeconds(-1 * DateTime.Now.Second));
                 if (!time)
                 {
                     continue;
                 }
                 var user = await _userRepository.GetUserAndRoles(reminder.userId);
                 await _sms.SendResponse(user.PhoneNumber, reminder.RemindFor);
-                if (reminder.RemindDateAndTime.Any(d => d.Date < DateTime.Now.Date))
+                if (reminder.Tasks.Count(d => d.TodoTime.Date < DateTime.Now.Date) == reminder.Tasks.Count())
                 {
                     var remind = new Reminder
                     {
                         Id = reminder.Id,
-                        UserId = reminder.userId,
                         ReminderStatus = ReminderStatus.Done,
-                        ReminderDays = reminder.ReminderDays,
-                        ReminderType = reminder.ReminderType,
-                        RemindFor = reminder.RemindFor,
                     };
-                    remind.RemindDateAndTime = ConvertToString(reminder.RemindDateAndTime);
                     await _reminderRepository.UpdateAsync(remind);
                 }
             }

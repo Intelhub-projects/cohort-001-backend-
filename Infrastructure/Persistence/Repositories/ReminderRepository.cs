@@ -26,15 +26,20 @@ namespace Infrastructure.Persistence.Repositories
 
         public async Task<IEnumerable<ReminderDto>> GetAllRemindersByStatusAsync(ReminderStatus status)
         {
-            var reminders = await _context.Reminders.Include(u => u.User).Include(rt=> rt.ReminderType).Where(x => x.ReminderStatus == status).Select(reminder => new ReminderDto
+            var reminders = await _context.Reminders.Include(u => u.User).Include(t=> t.Tasks)
+                .Where(x => x.ReminderStatus == status).Select(reminder => new ReminderDto
             {
-
-                RemindDateAndTime = ConverToDateTime(reminder.RemindDateAndTime),
                 ReminderDays = reminder.ReminderDays,
                 ReminderStatus = reminder.ReminderStatus,
                 ReminderType = reminder.ReminderType,
                 RemindFor = reminder.RemindFor,
                 userId = reminder.UserId,
+                Tasks = reminder.Tasks.Select(task => new TaskDto
+                {
+                    Id = task.Id,
+                    Todo = task.Todo,
+                    TodoTime = task.TodoTime,
+                }).ToList()
             }).ToListAsync();
 
             return reminders;
@@ -48,31 +53,16 @@ namespace Infrastructure.Persistence.Repositories
                 ReminderDays = reminder.ReminderDays,
                 ReminderType = reminder.ReminderType,
                 ReminderStatus = reminder.ReminderStatus,
-                RemindDateAndTime = ConverToDateTime(reminder.RemindDateAndTime)
+                Tasks = reminder.Tasks.Select(task => new TaskDto
+                {
+                    Id = task.Id,
+                    Todo = task.Todo,
+                    TodoTime = task.TodoTime,
+                }).ToList()
             }).AsNoTracking().ToPaginatedListAsync(filter.PageNumber, filter.PageSize);
             return reminders;
         }
 
-        private ICollection<DateTime> ConverToDateTime(string remindDateAndTime)
-        {
-            var a = remindDateAndTime.Split("  ");
-            List<DateTime> date = new List<DateTime>();
-            foreach (var item in a)
-            {
-                date.Add(Convert.ToDateTime(item));
-            }
-            return date;
-        }
 
-        /*private ICollection<DateTime> ConvertToDateTime(string dateANDTime)
-        {
-            var a = dateANDTime.Split(" ");
-            List<DateTime> date = new List<DateTime>();
-            foreach(var item in a)
-            {
-                date.Add(Convert.ToDateTime(item));
-            }
-            return date;
-        }*/
     }
 }
