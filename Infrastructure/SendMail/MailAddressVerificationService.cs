@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Infrastructure.SendMail
@@ -32,7 +33,7 @@ namespace Infrastructure.SendMail
             HttpContent httpContent = new StringContent(JsonSerializer.Serialize(new
             {
                 to = emailAddress,
-                FromApplication = "The FORT Application"
+                FromApplication = "The MEDPHARM Application"
             }));
 
             var requestResponse = await _httpClient.GetAsync(requestUri);
@@ -52,14 +53,28 @@ namespace Infrastructure.SendMail
                 return new BaseResponse
                 {
                     Status = false,
-                    Message = "Invalid EmailAddress",
+                    Message = "Invalid EmailAddress!",
                 };
             }
 
             return new BaseResponse
             {
                 Status = true,
+                Message = "Email verified!"
             };
+        }
+
+        public class MailAddressVerificationResponse
+        {
+            [JsonPropertyName("email")]
+            public string EmailAddress { get; set; }
+
+            [JsonPropertyName("auto_correct")]
+            public string AutoCorrect { get; set; }
+
+            [JsonPropertyName("deliverability")]
+            public string Deliverability { get; set; }
+
         }
     }
 }
