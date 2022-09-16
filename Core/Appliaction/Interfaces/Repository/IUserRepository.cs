@@ -13,7 +13,7 @@ namespace Application.Interfaces.Repositories
     public interface IUserRepository : IRepository<User>
     {
         public Task<IList<UsersInRoleResponseModel>> GetUsersInRoleAsync(string roleName);
-        public Task<bool> AnyAsync(Expression<Func<Role, bool>> expression);
+        public Task<bool> AnyAsync(Expression<Func<User, bool>> expression);
         public Task<Role> GetAsync(Expression<Func<Role, bool>> expression);
         public Task<User> GetUserAndRoles(Guid userId);
     }

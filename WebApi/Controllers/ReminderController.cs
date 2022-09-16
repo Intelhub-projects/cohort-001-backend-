@@ -20,7 +20,7 @@ namespace WebApi.Controllers
             _reminderService = reminderService;
         }
 
-        [HttpGet("CreateReminderAsync")]
+        [HttpPost("CreateReminderAsync")]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(BaseResponse))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(ValidationResultModel))]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized, Type = typeof(BaseResponse))]

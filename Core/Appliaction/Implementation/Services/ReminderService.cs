@@ -35,7 +35,8 @@ namespace Core.Appliaction.Implementation.Services
 
         public async Task<BaseResponse> CreateAsync(Guid userId, CreateReminder request)
         {
-            if (!await _userRepository.AnyAsync(u => u.Id == userId) || request == null)
+            var foundUser = await _userRepository.AnyAsync(u => u.Id == userId);
+            if (foundUser == false || request == null)
             {
                 return new BaseResponse
                 {
