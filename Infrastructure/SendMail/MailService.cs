@@ -9,6 +9,7 @@ using sib_api_v3_sdk.Client;
 using sib_api_v3_sdk.Model;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -81,7 +82,7 @@ namespace Infrastructure.SendMail
             messageVersiopns.Add(messageVersion);
             try
             {
-                var sendSmtpEmail = new SendSmtpEmail(Email, To, Bcc, Cc, mailRequest.HtmlContent, TextContent, Subject, ReplyTo, Attachment, Headers, TemplateId, Params, messageVersiopns, Tags);
+                var sendSmtpEmail = new SendSmtpEmail(Email, To, Bcc, Cc, "Caring for your life...", TextContent, Subject, ReplyTo, Attachment, Headers, TemplateId, Params, messageVersiopns, Tags);
                 CreateSmtpEmail result = apiInstance.SendTransacEmail(sendSmtpEmail);
                 Debug.WriteLine(result.ToJson());
                 Console.WriteLine(result.ToJson());
@@ -95,7 +96,11 @@ namespace Infrastructure.SendMail
             }
 
 
-
+            return new BaseResponse
+            {
+                Message = "Email sent successfully!",
+                Status = true
+            };
 
         }
-    }   }
+}   }
