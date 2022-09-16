@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,10 +21,12 @@ namespace Infrastructure.SendMail
     {
         private readonly IConfiguration _configuration;
         public string _mailKey;
+        private readonly HttpClient _httpClient;
 
         public MailService(IConfiguration configuration)
         {
             _configuration = configuration;
+            _httpClient = new HttpClient();
             _mailKey = _configuration.GetSection("MailConfiguration")["mailKey"];
         }
 
@@ -52,27 +55,28 @@ namespace Infrastructure.SendMail
             List<SendSmtpEmailCc> Cc = new List<SendSmtpEmailCc>();
             Cc.Add(CcData);
             string TextContent = null;
-            string Subject = "My {{params.subject}}";
+            string Subject = "Welcome {{params.subject}}";
             string ReplyToName = "Intelhub Medpharm";
             string ReplyToEmail = "intelhubmedpharm@gmail.com";
             SendSmtpEmailReplyTo ReplyTo = new SendSmtpEmailReplyTo(ReplyToEmail, ReplyToName);
-            //string AttachmentUrl = "file:///C:/Users/Dejik%20Concepts/Documents/My%20CV.pdf";
-            string AttachmentUrl = null;
-
-
-
+            var AttachmentUrl = new WebClient();
+            AttachmentUrl.DownloadFile("https://media.istockphoto.com/photos/hello-and-welcome-written-white-lightbox-sitting-on-blue-background-picture-id1371547852?b=1&k=20&m=1371547852&s=170667a&w=0&h=vRGvMO4a7KKYdTQ9Ln1UVdlg5C0POExw73jGsotVgzA=", "a.mpeg");
+            //Convert.ToString(AttachmentUrl);
+        
             var stringInBase64 = Base64Encode(text);
             byte[] Content = System.Convert.FromBase64String(stringInBase64);
             string AttachmentName = "Welcome.txt";
-            SendSmtpEmailAttachment AttachmentContent = new SendSmtpEmailAttachment(AttachmentUrl, Content, AttachmentName);
+            SendSmtpEmailAttachment AttachmentContent = new SendSmtpEmailAttachment(AttachmentUrl.ToString(), Content, AttachmentName);
             List<SendSmtpEmailAttachment> Attachment = new List<SendSmtpEmailAttachment>();
             Attachment.Add(AttachmentContent);
+
+            
             JObject Headers = new JObject();
             Headers.Add("Some-Custom-Name", "unique-id-1234");
             long? TemplateId = null;
             JObject Params = new JObject();
             Params.Add("parameter", "My param value");
-            Params.Add("subject", "New Subject");
+            Params.Add("subject", "Message");
             List<string> Tags = new List<string>();
             Tags.Add("mytag");
             SendSmtpEmailTo1 smtpEmailTo1 = new SendSmtpEmailTo1(recipientMail, recipientName);
