@@ -56,8 +56,11 @@ namespace Infrastructure.SendMail
             string ReplyToName = "Intelhub Medpharm";
             string ReplyToEmail = "intelhubmedpharm@gmail.com";
             SendSmtpEmailReplyTo ReplyTo = new SendSmtpEmailReplyTo(ReplyToEmail, ReplyToName);
-            string AttachmentUrl = null;
-            string stringInBase64 = $"{text}";
+            string AttachmentUrl = "file:///C:/Users/Dejik%20Concepts/Documents/My%20CV.pdf";
+
+
+
+            var stringInBase64 = Base64Encode(text);
             byte[] Content = System.Convert.FromBase64String(stringInBase64);
             string AttachmentName = "Welcome.txt";
             SendSmtpEmailAttachment AttachmentContent = new SendSmtpEmailAttachment(AttachmentUrl, Content, AttachmentName);
@@ -103,4 +106,10 @@ namespace Infrastructure.SendMail
             };
 
         }
-}   }
+
+        private static string Base64Encode(string plainText)
+        {
+            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
+            return System.Convert.ToBase64String(plainTextBytes);
+        }
+    }   }
