@@ -3,6 +3,7 @@ using Application.Interfaces.Services;
 using Core.Appliaction.Interfaces.Services;
 using Core.Domain.Entities;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json.Linq;
 using sib_api_v3_sdk.Api;
 using sib_api_v3_sdk.Client;
 using sib_api_v3_sdk.Model;
@@ -55,7 +56,7 @@ namespace Infrastructure.SendMail
             string ReplyToEmail = "intelhubmedpharm@gmail.com";
             SendSmtpEmailReplyTo ReplyTo = new SendSmtpEmailReplyTo(ReplyToEmail, ReplyToName);
             string AttachmentUrl = null;
-            string stringInBase64 = $"{Convert.ToByte(text)}";
+            string stringInBase64 = $"{text}";
             byte[] Content = System.Convert.FromBase64String(stringInBase64);
             string AttachmentName = "Welcome.txt";
             SendSmtpEmailAttachment AttachmentContent = new SendSmtpEmailAttachment(AttachmentUrl, Content, AttachmentName);
@@ -69,7 +70,7 @@ namespace Infrastructure.SendMail
             Params.Add("subject", "New Subject");
             List<string> Tags = new List<string>();
             Tags.Add("mytag");
-            SendSmtpEmailTo1 smtpEmailTo1 = new SendSmtpEmailTo1(mailRequest.ToEmail, mailRequest.ToName);
+            SendSmtpEmailTo1 smtpEmailTo1 = new SendSmtpEmailTo1(recipientMail, recipientName);
             List<SendSmtpEmailTo1> To1 = new List<SendSmtpEmailTo1>();
             To1.Add(smtpEmailTo1);
             Dictionary<string, object> _parmas = new Dictionary<string, object>();
