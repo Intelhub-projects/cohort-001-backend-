@@ -56,7 +56,8 @@ namespace Infrastructure.SendMail
             string ReplyToName = "Intelhub Medpharm";
             string ReplyToEmail = "intelhubmedpharm@gmail.com";
             SendSmtpEmailReplyTo ReplyTo = new SendSmtpEmailReplyTo(ReplyToEmail, ReplyToName);
-            string AttachmentUrl = "file:///C:/Users/Dejik%20Concepts/Documents/My%20CV.pdf";
+            //string AttachmentUrl = "file:///C:/Users/Dejik%20Concepts/Documents/My%20CV.pdf";
+            string AttachmentUrl = null;
 
 
 
