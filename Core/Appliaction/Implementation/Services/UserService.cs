@@ -8,6 +8,8 @@ using Application.Interfaces.Identity;
 using Application.Interfaces.Repositories;
 using Application.Interfaces.Services;
 using Application.Wrapper;
+using Core.Appliaction.Interfaces.Repository;
+using Core.Appliaction.Interfaces.Services;
 using Core.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using System;
@@ -24,14 +26,24 @@ namespace Application.Implementations.Services
         private readonly RoleManager<Role> _roleManager;
         private readonly IIdentityService _identityService;
         private readonly IUserRepository _userRepository;
+        private readonly IMailAddressVerificationService _mailAddressVerificationService;
+        private readonly IMailService _mailService;
+        private readonly IMessageRepository _messageRepository;
 
-        public UserService(UserManager<User> userManager, RoleManager<Role> roleManager, IIdentityService identityService, IUserRepository userRepository)
+        public UserService(UserManager<User> userManager, RoleManager<Role> roleManager, IIdentityService identityService, 
+            IUserRepository userRepository, IMailAddressVerificationService mailAddressVerificationService,
+            IMailService mailService, IMessageRepository messageRepository)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _identityService = identityService;
             _userRepository = userRepository;
+            _mailAddressVerificationService = mailAddressVerificationService;
+            _mailService = mailService;
+            _messageRepository = messageRepository;
         }
+
+        
 
         public async Task<BaseResponse> AddUserAsync(CreateUser request)
         {
@@ -194,7 +206,22 @@ namespace Application.Implementations.Services
             };
 
             patient.Password = _identityService.GetPasswordHash(patient.Password);
+
+            var response = await _mailAddressVerificationService.VerifyMailAddress(patient.Email);
+            if (!response.Status) return new BaseResponse
+            {
+                Message = "Invalid email address!",
+                Status = false
+            };
             var newPatient = await _userManager.CreateAsync(patient);
+            var getMessageType = await _messageRepository.GetMessageByType(Core.Domain.Enums.MessageType.RegistrationMessage);
+            var newMessage = new Message
+            {
+                MessageType = getMessageType.MessageType,
+                Text = $"<html><body><p><div>{DateTime.Now}</p><p><div>Dear {patient.FirstName},</p><div><h1> {getMessageType.Text}</h1><div><h3>Your online medical hub, you have the access to all services including:Search forhealth issues,view diagnostic results, ask questions pertining ypur health, and get to view answers on them by our seasoned doctors.</h3><h5>MEDPHARM!-</h5><h6>Fortifying Our Health Rightly Through Technology</h6></div></div></div></div>></body></html>"
+            };
+
+            await _mailService.SendWelcomeMailToNewPatient(patient.FirstName, patient.Email, newMessage.Text);
             if (newPatient == null)
             {
                 throw new Exception(UsersConstant.NotSuccessMessage);

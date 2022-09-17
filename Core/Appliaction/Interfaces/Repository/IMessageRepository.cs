@@ -12,7 +12,7 @@ namespace Core.Appliaction.Interfaces.Repository
 {
     public interface IMessageRepository
     {
-        Task<IEnumerable<Message>> GetMessageByType(MessageType messageType);
+        Task<Message> GetMessageByType(MessageType messageType);
         Task<IEnumerable<Message>> GetAllMessages();
 
     }
