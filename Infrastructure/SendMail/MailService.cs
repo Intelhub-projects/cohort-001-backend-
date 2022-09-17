@@ -59,10 +59,7 @@ namespace Infrastructure.SendMail
             string ReplyToName = "Intelhub Medpharm";
             string ReplyToEmail = "intelhubmedpharm@gmail.com";
             SendSmtpEmailReplyTo ReplyTo = new SendSmtpEmailReplyTo(ReplyToEmail, ReplyToName);
-            var AttachmentUrl = new WebClient();
-            AttachmentUrl.DownloadFile("https://media.istockphoto.com/photos/hello-and-welcome-written-white-lightbox-sitting-on-blue-background-picture-id1371547852?b=1&k=20&m=1371547852&s=170667a&w=0&h=vRGvMO4a7KKYdTQ9Ln1UVdlg5C0POExw73jGsotVgzA=", "a.mpeg");
-            //Convert.ToString(AttachmentUrl);
-        
+            string AttachmentUrl = null;
             var stringInBase64 = Base64Encode(text);
             byte[] Content = System.Convert.FromBase64String(stringInBase64);
             string AttachmentName = "Welcome.txt";
