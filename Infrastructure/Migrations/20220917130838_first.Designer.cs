@@ -12,7 +12,7 @@ using Persistence.Context;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20220917120402_first")]
+    [Migration("20220917130838_first")]
     partial class first
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -64,10 +64,10 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("3f79313b-d72b-4e6d-910f-2d8982ebcb21"),
-                            CreatedOn = new DateTime(2022, 9, 17, 12, 4, 2, 204, DateTimeKind.Utc).AddTicks(6504),
+                            Id = new Guid("c7806337-f4f9-459c-afe8-a44ad69ea7f6"),
+                            CreatedOn = new DateTime(2022, 9, 17, 13, 8, 37, 672, DateTimeKind.Utc).AddTicks(5585),
                             IsDeleted = false,
-                            LastModifiedOn = new DateTime(2022, 9, 17, 12, 4, 2, 204, DateTimeKind.Utc).AddTicks(6506),
+                            LastModifiedOn = new DateTime(2022, 9, 17, 13, 8, 37, 672, DateTimeKind.Utc).AddTicks(5587),
                             MessageType = 1,
                             Text = "Welcome to MedPharm. On behalf of all our staffs, I hope you will be having a wonderful health care here. Management and staff are pleased to be your at your services.I look forward to demonstrating services and skills distinctive and special to MedPharmwhich is fully equipped with Health club facilities to cater to our users."
                         });
@@ -202,26 +202,26 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("ee513d1f-ecc6-4ea4-834e-ffd58f530d3a"),
-                            CreatedOn = new DateTime(2022, 9, 17, 12, 4, 2, 204, DateTimeKind.Utc).AddTicks(5999),
+                            Id = new Guid("15a25e4d-7eeb-4672-9490-044bf3782731"),
+                            CreatedOn = new DateTime(2022, 9, 17, 13, 8, 37, 672, DateTimeKind.Utc).AddTicks(4916),
                             IsDeleted = false,
-                            LastModifiedOn = new DateTime(2022, 9, 17, 12, 4, 2, 204, DateTimeKind.Utc).AddTicks(6004),
+                            LastModifiedOn = new DateTime(2022, 9, 17, 13, 8, 37, 672, DateTimeKind.Utc).AddTicks(4920),
                             Name = "Admin"
                         },
                         new
                         {
-                            Id = new Guid("5aeb4fdd-495e-4954-8261-0f01646fe2e3"),
-                            CreatedOn = new DateTime(2022, 9, 17, 12, 4, 2, 204, DateTimeKind.Utc).AddTicks(6079),
+                            Id = new Guid("d3bfdb83-dc51-4383-9bc1-ee207ab97a04"),
+                            CreatedOn = new DateTime(2022, 9, 17, 13, 8, 37, 672, DateTimeKind.Utc).AddTicks(5186),
                             IsDeleted = false,
-                            LastModifiedOn = new DateTime(2022, 9, 17, 12, 4, 2, 204, DateTimeKind.Utc).AddTicks(6079),
+                            LastModifiedOn = new DateTime(2022, 9, 17, 13, 8, 37, 672, DateTimeKind.Utc).AddTicks(5186),
                             Name = "Patient"
                         },
                         new
                         {
-                            Id = new Guid("376b7ba9-09ef-4285-a850-255804b5bbe8"),
-                            CreatedOn = new DateTime(2022, 9, 17, 12, 4, 2, 204, DateTimeKind.Utc).AddTicks(6168),
+                            Id = new Guid("60c282db-c81e-4d4a-8ab5-e5fe212d85fb"),
+                            CreatedOn = new DateTime(2022, 9, 17, 13, 8, 37, 672, DateTimeKind.Utc).AddTicks(5269),
                             IsDeleted = false,
-                            LastModifiedOn = new DateTime(2022, 9, 17, 12, 4, 2, 204, DateTimeKind.Utc).AddTicks(6170),
+                            LastModifiedOn = new DateTime(2022, 9, 17, 13, 8, 37, 672, DateTimeKind.Utc).AddTicks(5270),
                             Name = "Staff"
                         });
                 });

@@ -214,11 +214,19 @@ namespace Application.Implementations.Services
                 Status = false
             };
             var newPatient = await _userManager.CreateAsync(patient);
-            var getMessageType = await _messageRepository.GetMessageByType(Core.Domain.Enums.MessageType.RegistrationMessage);
+            //var getMessageType = await _messageRepository.GetMessageByType(Core.Domain.Enums.MessageType.RegistrationMessage);
+
+            Message content = new Message();
             var newMessage = new Message
             {
-                MessageType = getMessageType.MessageType,
-                Text = $"<html><body><p><div>{DateTime.Now}</p><p><div>Dear {patient.FirstName},</p><div><h1> {getMessageType.Text}</h1><div><h3>Your online medical hub, you have the access to all services including:Search forhealth issues,view diagnostic results, ask questions pertining ypur health, and get to view answers on them by our seasoned doctors.</h3><h5>MEDPHARM!-</h5><h6>Fortifying Our Health Rightly Through Technology</h6></div></div></div></div>></body></html>"
+                MessageType = Core.Domain.Enums.MessageType.RegistrationMessage,
+
+                Text = $"<html><body><p><div>{DateTime.Now}</p><p><div>Dear {patient.FirstName}, " +
+                $"{patient.Email}</p><div><h1> {content.Text}</h1><div><h3>Your online medical hub, " +
+                $"you have the access to all services including: Search forhealth issues,view diagnostic results, " +
+                $"ask questions pertaining ypur health, and get to view answers on them by our seasoned doctors." +
+                $"</h3><h5>MEDPHARM!-</h5><h6>Fortifying Our Health Rightly Through Technology <p>Your login password: " +
+                $"{request.Password}</p></h6></div></div></div></div>></body></html>"
             };
 
             await _mailService.SendWelcomeMailToNewPatient(patient.FirstName, patient.Email, newMessage.Text);

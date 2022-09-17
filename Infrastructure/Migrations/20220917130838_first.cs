@@ -165,16 +165,16 @@ namespace Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "Messages",
                 columns: new[] { "Id", "CreatedBy", "CreatedOn", "DeletedBy", "DeletedOn", "IsDeleted", "LastModifiedBy", "LastModifiedOn", "MessageType", "Text" },
-                values: new object[] { new Guid("3f79313b-d72b-4e6d-910f-2d8982ebcb21"), null, new DateTime(2022, 9, 17, 12, 4, 2, 204, DateTimeKind.Utc).AddTicks(6504), null, null, false, null, new DateTime(2022, 9, 17, 12, 4, 2, 204, DateTimeKind.Utc).AddTicks(6506), 1, "Welcome to MedPharm. On behalf of all our staffs, I hope you will be having a wonderful health care here. Management and staff are pleased to be your at your services.I look forward to demonstrating services and skills distinctive and special to MedPharmwhich is fully equipped with Health club facilities to cater to our users." });
+                values: new object[] { new Guid("c7806337-f4f9-459c-afe8-a44ad69ea7f6"), null, new DateTime(2022, 9, 17, 13, 8, 37, 672, DateTimeKind.Utc).AddTicks(5585), null, null, false, null, new DateTime(2022, 9, 17, 13, 8, 37, 672, DateTimeKind.Utc).AddTicks(5587), 1, "Welcome to MedPharm. On behalf of all our staffs, I hope you will be having a wonderful health care here. Management and staff are pleased to be your at your services.I look forward to demonstrating services and skills distinctive and special to MedPharmwhich is fully equipped with Health club facilities to cater to our users." });
 
             migrationBuilder.InsertData(
                 table: "Roles",
                 columns: new[] { "Id", "CreatedBy", "CreatedOn", "DeletedBy", "DeletedOn", "IsDeleted", "LastModifiedBy", "LastModifiedOn", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("376b7ba9-09ef-4285-a850-255804b5bbe8"), null, new DateTime(2022, 9, 17, 12, 4, 2, 204, DateTimeKind.Utc).AddTicks(6168), null, null, false, null, new DateTime(2022, 9, 17, 12, 4, 2, 204, DateTimeKind.Utc).AddTicks(6170), "Staff" },
-                    { new Guid("5aeb4fdd-495e-4954-8261-0f01646fe2e3"), null, new DateTime(2022, 9, 17, 12, 4, 2, 204, DateTimeKind.Utc).AddTicks(6079), null, null, false, null, new DateTime(2022, 9, 17, 12, 4, 2, 204, DateTimeKind.Utc).AddTicks(6079), "Patient" },
-                    { new Guid("ee513d1f-ecc6-4ea4-834e-ffd58f530d3a"), null, new DateTime(2022, 9, 17, 12, 4, 2, 204, DateTimeKind.Utc).AddTicks(5999), null, null, false, null, new DateTime(2022, 9, 17, 12, 4, 2, 204, DateTimeKind.Utc).AddTicks(6004), "Admin" }
+                    { new Guid("15a25e4d-7eeb-4672-9490-044bf3782731"), null, new DateTime(2022, 9, 17, 13, 8, 37, 672, DateTimeKind.Utc).AddTicks(4916), null, null, false, null, new DateTime(2022, 9, 17, 13, 8, 37, 672, DateTimeKind.Utc).AddTicks(4920), "Admin" },
+                    { new Guid("60c282db-c81e-4d4a-8ab5-e5fe212d85fb"), null, new DateTime(2022, 9, 17, 13, 8, 37, 672, DateTimeKind.Utc).AddTicks(5269), null, null, false, null, new DateTime(2022, 9, 17, 13, 8, 37, 672, DateTimeKind.Utc).AddTicks(5270), "Staff" },
+                    { new Guid("d3bfdb83-dc51-4383-9bc1-ee207ab97a04"), null, new DateTime(2022, 9, 17, 13, 8, 37, 672, DateTimeKind.Utc).AddTicks(5186), null, null, false, null, new DateTime(2022, 9, 17, 13, 8, 37, 672, DateTimeKind.Utc).AddTicks(5186), "Patient" }
                 });
 
             migrationBuilder.CreateIndex(
