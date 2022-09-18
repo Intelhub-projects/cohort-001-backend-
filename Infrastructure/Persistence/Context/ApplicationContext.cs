@@ -34,19 +34,7 @@ namespace Persistence.Context
                        Id = Guid.NewGuid(),
                        Name = "Staff"
                    }
-                );
-            builder.Entity<Message>().HasData(
-                new Message
-                {
-                    Id = Guid.NewGuid(),
-                    MessageType = Core.Domain.Enums.MessageType.RegistrationMessage,
-                    Text = "Welcome to MedPharm. On behalf of all our staffs, I hope you will be having a wonderful health care here. " +
-                    "Management and staff are pleased to be your at your services.I look forward to demonstrating services and skills distinctive and special to MedPharm" +
-                    "which is fully equipped with Health club facilities to cater to our users."
-                    
-                }
-
-
+          
                 );
 
                 builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
@@ -90,6 +78,6 @@ namespace Persistence.Context
         public DbSet<Role> Roles {get; set;}
         public DbSet<UserRole> UserRoles {get; set;}
         public DbSet<Reminder> Reminders {get; set;}
-        public DbSet<Message> Messages { get; set; }
+        
     }
 }
