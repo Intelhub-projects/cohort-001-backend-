@@ -11,7 +11,7 @@ namespace Core.Appliaction.Interfaces.Services
 {
     public interface IMessageService
     {
-        Task<IEnumerable<Message>> GetMessageByType(MessageType messageType);
+        Task<Message> GetMessageByType(MessageType messageType);
         Task<IEnumerable<Message>> GetAllMessages();
     }
 }

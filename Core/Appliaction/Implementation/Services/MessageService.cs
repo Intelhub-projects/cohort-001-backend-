@@ -25,9 +25,9 @@ namespace Core.Appliaction.Implementation.Services
             return await _messageRepository.GetAllMessages();
         }
 
-        public async Task<IEnumerable<Message>> GetMessageByType(MessageType messageType)
+        public Task<Message> GetMessageByType(MessageType messageType)
         {
-           return await _messageRepository.GetMessageByType(messageType);
+           return _messageRepository.GetMessageByType(messageType);
 
             
         }

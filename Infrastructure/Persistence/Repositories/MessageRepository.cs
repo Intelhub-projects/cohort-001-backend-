@@ -33,17 +33,17 @@ namespace Infrastructure.Persistence.Repositories
             return messages;
         }
 
-        public async Task<IEnumerable<Message>> GetMessageByType(MessageType messageType)
+        public Task<Message> GetMessageByType(MessageType messageType)
         {
-            var messages = await _context.Messages.Where(type => type.MessageType == messageType).Select(message => new Message
+            var messages = _context.Messages.Where(type => type.MessageType == messageType).Select(message => new Message
             {
-               
+
                 Text = message.Text,
                 MessageType = message.MessageType
 
-            }).ToListAsync();
+            });
 
-            return messages;
+            return (Task<Message>)messages;
             
         }
     }
