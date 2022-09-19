@@ -216,7 +216,18 @@ namespace Application.Implementations.Services
             var newPatient = await _userManager.CreateAsync(patient);
             
         
-            //await _mailService.SendWelcomeMailToNewPatient(patient.FirstName, patient.Email, newMessage.Text);
+            await _mailService.SendWelcomeMailToNewPatient(patient.FirstName, patient.Email,
+
+                $"{DateTime.Now} " +
+                $"Dear {patient.FirstName}, " +
+                $"Welcome to MedPharm Health Care! " +
+                $"Your login details are: " +
+                $"Email: {patient.Email}, Password: {request.Password} " +
+                $"for more enquiries, visit www.intelhubmedpharmcare.com " +
+                $"Regards, " +
+                $"ADMIN."
+                
+                );
             await _responseService.SendResponse(patient.PhoneNumber,
 
                 $"{DateTime.Now} " +
@@ -227,7 +238,7 @@ namespace Application.Implementations.Services
                 $"for more enquiries, visit www.intelhubmedpharmcare.com " +
                 $"Regards, " +
                 $"ADMIN.");
-
+            //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
             if (newPatient == null)
             {
                 throw new Exception(UsersConstant.NotSuccessMessage);

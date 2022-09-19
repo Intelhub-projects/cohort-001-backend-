@@ -38,7 +38,7 @@ namespace Infrastructure.SendMail
 
             var apiInstance = new TransactionalEmailsApi();
             string SenderName = "IntehHub MedPharm";
-            string SenderEmail = "intelhubmedpharm@gmail.com";
+            string SenderEmail = "greatmoh007@gmail.com";
             SendSmtpEmailSender Email = new SendSmtpEmailSender(SenderName, SenderEmail);
             SendSmtpEmailTo smtpEmailTo = new SendSmtpEmailTo(recipientMail, recipientName);
             List<SendSmtpEmailTo> To = new List<SendSmtpEmailTo>();
