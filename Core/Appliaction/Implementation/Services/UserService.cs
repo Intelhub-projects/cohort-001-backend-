@@ -28,11 +28,11 @@ namespace Application.Implementations.Services
         private readonly IUserRepository _userRepository;
         private readonly IMailAddressVerificationService _mailAddressVerificationService;
         private readonly IMailService _mailService;
-        private readonly IMessageRepository _messageRepository;
+        private readonly IResponseService _responseService;
 
         public UserService(UserManager<User> userManager, RoleManager<Role> roleManager, IIdentityService identityService, 
             IUserRepository userRepository, IMailAddressVerificationService mailAddressVerificationService,
-            IMailService mailService, IMessageRepository messageRepository)
+            IMailService mailService,  IResponseService responseService)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -40,10 +40,10 @@ namespace Application.Implementations.Services
             _userRepository = userRepository;
             _mailAddressVerificationService = mailAddressVerificationService;
             _mailService = mailService;
-            _messageRepository = messageRepository;
+            _responseService = responseService;
         }
 
-        
+
 
         public async Task<BaseResponse> AddUserAsync(CreateUser request)
         {
@@ -214,22 +214,20 @@ namespace Application.Implementations.Services
                 Status = false
             };
             var newPatient = await _userManager.CreateAsync(patient);
-            //var getMessageType = await _messageRepository.GetMessageByType(Core.Domain.Enums.MessageType.RegistrationMessage);
+            
+        
+            //await _mailService.SendWelcomeMailToNewPatient(patient.FirstName, patient.Email, newMessage.Text);
+            await _responseService.SendResponse(patient.PhoneNumber,
 
-            Message content = new Message();
-            var newMessage = new Message
-            {
-                MessageType = Core.Domain.Enums.MessageType.RegistrationMessage,
+                $"{DateTime.Now} " +
+                $"Dear {patient.FirstName}, " +
+                $"Welcome to MedPharm Health Care! " +
+                $"Your login details are: " +
+                $"Email: {patient.Email}, Password: {request.Password} " +
+                $"for more enquiries, visit www.intelhubmedpharmcare.com " +
+                $"Regards, " +
+                $"ADMIN.");
 
-                Text = $"<html><body><p><div>{DateTime.Now}</p><p><div>Dear {patient.FirstName}, " +
-                $"{patient.Email}</p><div><h1> {content.Text}</h1><div><h3>Your online medical hub, " +
-                $"you have the access to all services including: Search forhealth issues,view diagnostic results, " +
-                $"ask questions pertaining ypur health, and get to view answers on them by our seasoned doctors." +
-                $"</h3><h5>MEDPHARM!-</h5><h6>Fortifying Our Health Rightly Through Technology <p>Your login password: " +
-                $"{request.Password}</p></h6></div></div></div></div>></body></html>"
-            };
-
-            await _mailService.SendWelcomeMailToNewPatient(patient.FirstName, patient.Email, newMessage.Text);
             if (newPatient == null)
             {
                 throw new Exception(UsersConstant.NotSuccessMessage);
