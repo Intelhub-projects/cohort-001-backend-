@@ -19,18 +19,6 @@ namespace WebApi.Controllers
 
         }
 
-        [HttpGet("GetMessageType")]
-        public IActionResult GetMessageType()
-        {
-            var messages = Enum.GetValues(typeof(MessageType)).Cast<int>().ToList();
-            List<string> message = new List<string>();
-            foreach (var item in messages)
-            {
-                message.Add(Enum.GetName(typeof(MessageType), item));
-            }
-            return Ok(message);
-
-        }
 
         [HttpGet("GetReminderType")]
         public IActionResult GetReminderType()

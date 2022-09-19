@@ -94,7 +94,9 @@ namespace WebApi.Controllers
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(ValidationResultModel))]
         public async Task<IActionResult> AdminLogin([FromBody] LoginRequestModel model)
         {
-            var user = await _userManager.FindByNameAsync(model.UserName);
+            var user = await _userManager.FindByEmailAsync(model.Email);
+
+           
             if (user != null)
             {
                 var isValidPassword = await _userManager.CheckPasswordAsync(user, model.Password);

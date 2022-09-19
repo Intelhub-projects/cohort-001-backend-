@@ -34,17 +34,7 @@ namespace Persistence.Context
                        Id = Guid.NewGuid(),
                        Name = "Staff"
                    }
-                );
-            builder.Entity<Message>().HasData(
-                new Message
-                {
-                    Id = Guid.NewGuid(),
-                    MessageType = Core.Domain.Enums.MessageType.RegistrationMessage,
-                    Text = "Welcome to MedPharm! We're glad you are here. Enjoy our distinct healthcare offers..."
-                    
-                }
-
-
+          
                 );
 
                 builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());

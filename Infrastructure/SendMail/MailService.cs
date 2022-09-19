@@ -21,16 +21,15 @@ namespace Infrastructure.SendMail
     {
         private readonly IConfiguration _configuration;
         public string _mailKey;
-        private readonly HttpClient _httpClient;
+       
 
         public MailService(IConfiguration configuration)
         {
             _configuration = configuration;
-            _httpClient = new HttpClient();
             _mailKey = _configuration.GetSection("MailConfiguration")["mailKey"];
         }
 
-        public async Task<BaseResponse> SendWelcomeMailToNewPatient(string recipientName, string recipientMail, string text)
+        public Task<BaseResponse> SendWelcomeMailToNewPatient(string recipientName, string recipientMail, string text)
         {
             if (!Configuration.Default.ApiKey.ContainsKey("api-key"))
             {
@@ -38,7 +37,7 @@ namespace Infrastructure.SendMail
             }
 
             var apiInstance = new TransactionalEmailsApi();
-            string SenderName = "Intelhub Medpharm";
+            string SenderName = "IntehHub MedPharm";
             string SenderEmail = "intelhubmedpharm@gmail.com";
             SendSmtpEmailSender Email = new SendSmtpEmailSender(SenderName, SenderEmail);
             SendSmtpEmailTo smtpEmailTo = new SendSmtpEmailTo(recipientMail, recipientName);
@@ -55,25 +54,23 @@ namespace Infrastructure.SendMail
             List<SendSmtpEmailCc> Cc = new List<SendSmtpEmailCc>();
             Cc.Add(CcData);
             string TextContent = null;
-            string Subject = "Welcome {{params.subject}}";
+            string Subject = "My {{params.subject}}";
             string ReplyToName = "Intelhub Medpharm";
             string ReplyToEmail = "intelhubmedpharm@gmail.com";
             SendSmtpEmailReplyTo ReplyTo = new SendSmtpEmailReplyTo(ReplyToEmail, ReplyToName);
             string AttachmentUrl = null;
             var stringInBase64 = Base64Encode(text);
             byte[] Content = System.Convert.FromBase64String(stringInBase64);
-            string AttachmentName = "Welcome.txt";
-            SendSmtpEmailAttachment AttachmentContent = new SendSmtpEmailAttachment(AttachmentUrl.ToString(), Content, AttachmentName);
+            string AttachmentName = "Congratulations.text";
+            SendSmtpEmailAttachment AttachmentContent = new SendSmtpEmailAttachment(AttachmentUrl, Content, AttachmentName);
             List<SendSmtpEmailAttachment> Attachment = new List<SendSmtpEmailAttachment>();
             Attachment.Add(AttachmentContent);
-
-            
             JObject Headers = new JObject();
             Headers.Add("Some-Custom-Name", "unique-id-1234");
             long? TemplateId = null;
             JObject Params = new JObject();
             Params.Add("parameter", "My param value");
-            Params.Add("subject", "Message");
+            Params.Add("subject", "New Subject");
             List<string> Tags = new List<string>();
             Tags.Add("mytag");
             SendSmtpEmailTo1 smtpEmailTo1 = new SendSmtpEmailTo1(recipientMail, recipientName);
@@ -101,11 +98,11 @@ namespace Infrastructure.SendMail
             }
 
 
-            return new BaseResponse
+            return System.Threading.Tasks.Task.FromResult(new BaseResponse
             {
                 Message = "Email sent successfully!",
                 Status = true
-            };
+            });
 
         }
 
