@@ -27,19 +27,17 @@ namespace Application.Implementations.Services
         private readonly IIdentityService _identityService;
         private readonly IUserRepository _userRepository;
         private readonly IMailAddressVerificationService _mailAddressVerificationService;
-        private readonly IMailService _mailService;
         private readonly IResponseService _responseService;
 
         public UserService(UserManager<User> userManager, RoleManager<Role> roleManager, IIdentityService identityService, 
             IUserRepository userRepository, IMailAddressVerificationService mailAddressVerificationService,
-            IMailService mailService,  IResponseService responseService)
+              IResponseService responseService)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _identityService = identityService;
             _userRepository = userRepository;
             _mailAddressVerificationService = mailAddressVerificationService;
-            _mailService = mailService;
             _responseService = responseService;
         }
 
@@ -215,19 +213,6 @@ namespace Application.Implementations.Services
             };
             var newPatient = await _userManager.CreateAsync(patient);
             
-        
-            await _mailService.SendWelcomeMailToNewPatient(patient.FirstName, patient.Email,
-
-                $"{DateTime.Now} " +
-                $"Dear {patient.FirstName}, " +
-                $"Welcome to MedPharm Health Care! " +
-                $"Your login details are: " +
-                $"Email: {patient.Email}, Password: {request.Password} " +
-                $"for more enquiries, visit www.intelhubmedpharmcare.com " +
-                $"Regards, " +
-                $"ADMIN."
-                
-                );
             await _responseService.SendResponse(patient.PhoneNumber,
 
                 $"{DateTime.Now} " +
