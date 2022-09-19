@@ -110,6 +110,7 @@ namespace Core.Appliaction.Implementation.Services
 
         private async Task<bool> WorkOnDailyReminder(IEnumerable<ReminderDto> dailyReminder)
         {
+            if (dailyReminder.Count() == 0) return false;
             foreach (var reminder in dailyReminder)
             {
                 var time = reminder.Tasks.Any(d => d.TodoTime.ToString("HH:mm") == DateTime.Now.ToString("HH:mm"));
@@ -125,6 +126,7 @@ namespace Core.Appliaction.Implementation.Services
         }
         private async Task<bool> WorkOnNonDailyReminder(IEnumerable<ReminderDto> dailyReminder)
         {
+            if (dailyReminder.Count() == 0) return false;
             foreach (var reminder in dailyReminder)
             {
                 var time = reminder.Tasks.Any(d => d.TodoTime.AddSeconds(-1 * d.TodoTime.Second) == DateTime.Now.AddSeconds(-1 * DateTime.Now.Second));
