@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infrastructure.Migrations
 {
-    public partial class first : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -116,7 +116,7 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MyTask",
+                name: "Tasks",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -133,9 +133,9 @@ namespace Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MyTask", x => x.Id);
+                    table.PrimaryKey("PK_Tasks", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MyTask_Reminders_ReminderId",
+                        name: "FK_Tasks_Reminders_ReminderId",
                         column: x => x.ReminderId,
                         principalTable: "Reminders",
                         principalColumn: "Id",
@@ -145,27 +145,27 @@ namespace Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "Roles",
                 columns: new[] { "Id", "CreatedBy", "CreatedOn", "DeletedBy", "DeletedOn", "IsDeleted", "LastModifiedBy", "LastModifiedOn", "Name" },
-                values: new object[] { new Guid("2b37d1e2-41de-4bb7-9d27-12f8d2f528bf"), null, new DateTime(2022, 9, 18, 13, 20, 58, 101, DateTimeKind.Utc).AddTicks(427), null, null, false, null, new DateTime(2022, 9, 18, 13, 20, 58, 101, DateTimeKind.Utc).AddTicks(431), "Admin" });
+                values: new object[] { new Guid("0f98c670-0439-4f24-80f2-bcf9d0a9a65a"), null, new DateTime(2022, 9, 19, 10, 36, 37, 447, DateTimeKind.Utc).AddTicks(9267), null, null, false, null, new DateTime(2022, 9, 19, 10, 36, 37, 447, DateTimeKind.Utc).AddTicks(9267), "Staff" });
 
             migrationBuilder.InsertData(
                 table: "Roles",
                 columns: new[] { "Id", "CreatedBy", "CreatedOn", "DeletedBy", "DeletedOn", "IsDeleted", "LastModifiedBy", "LastModifiedOn", "Name" },
-                values: new object[] { new Guid("687434dc-552e-465a-a5ec-bd1740a46c23"), null, new DateTime(2022, 9, 18, 13, 20, 58, 101, DateTimeKind.Utc).AddTicks(495), null, null, false, null, new DateTime(2022, 9, 18, 13, 20, 58, 101, DateTimeKind.Utc).AddTicks(495), "Patient" });
+                values: new object[] { new Guid("5f757667-68c6-4e13-9d22-2928adc6cc65"), null, new DateTime(2022, 9, 19, 10, 36, 37, 447, DateTimeKind.Utc).AddTicks(9260), null, null, false, null, new DateTime(2022, 9, 19, 10, 36, 37, 447, DateTimeKind.Utc).AddTicks(9261), "Patient" });
 
             migrationBuilder.InsertData(
                 table: "Roles",
                 columns: new[] { "Id", "CreatedBy", "CreatedOn", "DeletedBy", "DeletedOn", "IsDeleted", "LastModifiedBy", "LastModifiedOn", "Name" },
-                values: new object[] { new Guid("fa5b316b-6918-4bc0-be02-17a82e53288d"), null, new DateTime(2022, 9, 18, 13, 20, 58, 101, DateTimeKind.Utc).AddTicks(557), null, null, false, null, new DateTime(2022, 9, 18, 13, 20, 58, 101, DateTimeKind.Utc).AddTicks(557), "Staff" });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MyTask_ReminderId",
-                table: "MyTask",
-                column: "ReminderId");
+                values: new object[] { new Guid("7ff621fa-2442-426b-8734-3edae0c7cb1a"), null, new DateTime(2022, 9, 19, 10, 36, 37, 447, DateTimeKind.Utc).AddTicks(9146), null, null, false, null, new DateTime(2022, 9, 19, 10, 36, 37, 447, DateTimeKind.Utc).AddTicks(9149), "Admin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reminders_UserId",
                 table: "Reminders",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tasks_ReminderId",
+                table: "Tasks",
+                column: "ReminderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserRoles_RoleId",
@@ -181,7 +181,7 @@ namespace Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "MyTask");
+                name: "Tasks");
 
             migrationBuilder.DropTable(
                 name: "UserRoles");

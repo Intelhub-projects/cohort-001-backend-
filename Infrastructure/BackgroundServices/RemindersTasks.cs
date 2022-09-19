@@ -34,7 +34,7 @@ namespace Infrastructure.BackgroundServices
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            while (stoppingToken.IsCancellationRequested)
+            while (!stoppingToken.IsCancellationRequested)
             {
                 var now = DateTime.UtcNow;
                 try
@@ -42,13 +42,13 @@ namespace Infrastructure.BackgroundServices
                     using (var scope = _serviceScopeFactory.CreateScope())
                     {
                         var reminderService = scope.ServiceProvider.GetRequiredService<IReminderService>();
-                        reminderService.SendAlert();
+                        await reminderService.SendAlert();
                     }
 
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError($"Error occured generating the weekly payroll. {ex.Message}");
+                    _logger.LogError($"Error occured sending notification. {ex.Message}");
                     _logger.LogError(ex, ex.Message);
                 }
                 _logger.LogInformation($"Background hosted service for {nameof(RemindersTasks)} is stopping");

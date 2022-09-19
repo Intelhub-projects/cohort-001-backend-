@@ -24,10 +24,9 @@ namespace Infrastructure.Persistence.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<ReminderDto>> GetAllRemindersByStatusAsync(ReminderStatus status)
+        public async Task<IList<ReminderDto>> GetAllRemindersByStatusAsync(ReminderStatus status)
         {
-            var reminders = await _context.Reminders.Include(u => u.User).Include(t=> t.Tasks)
-                .Where(x => x.ReminderStatus == status).Select(reminder => new ReminderDto
+            var reminders = await _context.Reminders.Select(reminder => new ReminderDto
             {
                 ReminderDays = reminder.ReminderDays,
                 ReminderStatus = reminder.ReminderStatus,
@@ -47,7 +46,8 @@ namespace Infrastructure.Persistence.Repositories
 
         public async Task<PaginatedList<ReminderDto>> GetAllUserReminderByStatusAsync(Expression<Func<Reminder, bool>> expression, PaginationFilter filter)
         {
-            var reminders = await _context.Reminders.Where(expression).Select(reminder => new ReminderDto
+            var reminders = await _context.Reminders.Where(expression)
+                .Select(reminder => new ReminderDto
             {
                 RemindFor = reminder.RemindFor,
                 ReminderDays = reminder.ReminderDays,

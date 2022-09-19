@@ -62,7 +62,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("ReminderId");
 
-                    b.ToTable("MyTask");
+                    b.ToTable("Tasks");
                 });
 
             modelBuilder.Entity("Core.Domain.Entities.Reminder", b =>
@@ -151,26 +151,26 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("2b37d1e2-41de-4bb7-9d27-12f8d2f528bf"),
-                            CreatedOn = new DateTime(2022, 9, 18, 13, 20, 58, 101, DateTimeKind.Utc).AddTicks(427),
+                            Id = new Guid("7ff621fa-2442-426b-8734-3edae0c7cb1a"),
+                            CreatedOn = new DateTime(2022, 9, 19, 10, 36, 37, 447, DateTimeKind.Utc).AddTicks(9146),
                             IsDeleted = false,
-                            LastModifiedOn = new DateTime(2022, 9, 18, 13, 20, 58, 101, DateTimeKind.Utc).AddTicks(431),
+                            LastModifiedOn = new DateTime(2022, 9, 19, 10, 36, 37, 447, DateTimeKind.Utc).AddTicks(9149),
                             Name = "Admin"
                         },
                         new
                         {
-                            Id = new Guid("687434dc-552e-465a-a5ec-bd1740a46c23"),
-                            CreatedOn = new DateTime(2022, 9, 18, 13, 20, 58, 101, DateTimeKind.Utc).AddTicks(495),
+                            Id = new Guid("5f757667-68c6-4e13-9d22-2928adc6cc65"),
+                            CreatedOn = new DateTime(2022, 9, 19, 10, 36, 37, 447, DateTimeKind.Utc).AddTicks(9260),
                             IsDeleted = false,
-                            LastModifiedOn = new DateTime(2022, 9, 18, 13, 20, 58, 101, DateTimeKind.Utc).AddTicks(495),
+                            LastModifiedOn = new DateTime(2022, 9, 19, 10, 36, 37, 447, DateTimeKind.Utc).AddTicks(9261),
                             Name = "Patient"
                         },
                         new
                         {
-                            Id = new Guid("fa5b316b-6918-4bc0-be02-17a82e53288d"),
-                            CreatedOn = new DateTime(2022, 9, 18, 13, 20, 58, 101, DateTimeKind.Utc).AddTicks(557),
+                            Id = new Guid("0f98c670-0439-4f24-80f2-bcf9d0a9a65a"),
+                            CreatedOn = new DateTime(2022, 9, 19, 10, 36, 37, 447, DateTimeKind.Utc).AddTicks(9267),
                             IsDeleted = false,
-                            LastModifiedOn = new DateTime(2022, 9, 18, 13, 20, 58, 101, DateTimeKind.Utc).AddTicks(557),
+                            LastModifiedOn = new DateTime(2022, 9, 19, 10, 36, 37, 447, DateTimeKind.Utc).AddTicks(9267),
                             Name = "Staff"
                         });
                 });

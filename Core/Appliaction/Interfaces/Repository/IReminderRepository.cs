@@ -15,7 +15,7 @@ namespace Core.Appliaction.Interfaces.Repository
 {
     public interface IReminderRepository : IRepository<Reminder>
     {
-        Task<IEnumerable<ReminderDto>> GetAllRemindersByStatusAsync(ReminderStatus status);
+        Task<IList<ReminderDto>> GetAllRemindersByStatusAsync(ReminderStatus status);
         Task<PaginatedList<ReminderDto>> GetAllUserReminderByStatusAsync(Expression<Func<Reminder, bool>> expression, PaginationFilter filter);
 
     }

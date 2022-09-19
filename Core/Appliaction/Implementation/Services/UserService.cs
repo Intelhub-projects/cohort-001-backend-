@@ -60,13 +60,14 @@ namespace Application.Implementations.Services
            
             var user = new User
             {
-                UserName = request.UserName,
-                Email = request.UserName,
                 FirstName = request.FirstName,
                 LastName = request.LastName,
                 PhoneNumber = request.PhoneNumber,
-                CreatedBy = "fmkDev"
-                
+                UserName = request.UserName,
+                Email = request.Email,
+                Address = request.Address,
+                Gender = request.Gender,
+
             };
             user.Password = _identityService.GetPasswordHash(request.Password);
             var newUser = await _userManager.CreateAsync(user);
@@ -199,13 +200,12 @@ namespace Application.Implementations.Services
                 UserName = request.UserName,
                 Email = request.Email,
                 Address = request.Address,
-                Password = request.Password,
                 Gender = request.Gender,
                 
 
             };
 
-            patient.Password = _identityService.GetPasswordHash(patient.Password);
+            patient.Password = _identityService.GetPasswordHash(request.Password);
 
             var response = await _mailAddressVerificationService.VerifyMailAddress(patient.Email);
             if (!response.Status) return new BaseResponse
