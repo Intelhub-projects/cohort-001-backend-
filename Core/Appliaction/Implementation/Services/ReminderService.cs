@@ -96,18 +96,18 @@ namespace Core.Appliaction.Implementation.Services
    
         }
 
-        public async void SendAlert()
+        public async Task<bool> SendAlert()
         {
             var reminders = await _reminderRepository.GetAllRemindersByStatusAsync(ReminderStatus.Onboard);
             var nonDaily = reminders.Where(t => t.ReminderType == ReminderType.NonDaily);
             var daily = reminders.Where(t => t.ReminderType == ReminderType.Daily);
 
-            WorkOnDailyReminder(daily);
-            WorkOnNonDailyReminder(nonDaily);
-           
+            var a = WorkOnDailyReminder(daily);
+            var b = WorkOnNonDailyReminder(nonDaily);
+            return true;
         }
 
-        private async void WorkOnDailyReminder(IEnumerable<ReminderDto> dailyReminder)
+        private async Task<bool> WorkOnDailyReminder(IEnumerable<ReminderDto> dailyReminder)
         {
             foreach (var reminder in dailyReminder)
             {
@@ -120,8 +120,9 @@ namespace Core.Appliaction.Implementation.Services
                 await _sms.SendResponse(user.PhoneNumber, reminder.RemindFor);               
                 
             }
+            return true;
         }
-        private async void WorkOnNonDailyReminder(IEnumerable<ReminderDto> dailyReminder)
+        private async Task<bool> WorkOnNonDailyReminder(IEnumerable<ReminderDto> dailyReminder)
         {
             foreach (var reminder in dailyReminder)
             {
@@ -142,17 +143,18 @@ namespace Core.Appliaction.Implementation.Services
                     await _reminderRepository.UpdateAsync(remind);
                 }
             }
+            return true;
         }
         
         public async Task<PaginatedList<ReminderDto>> GetOnboardReminderByUserIdAsync(Guid userId, PaginationFilter filter)
         {
-            var doneReminders = await _reminderRepository.GetAllUserReminderByStatusAsync(u => u.Id == userId && u.ReminderStatus == ReminderStatus.Onboard, filter);
-            return doneReminders;
+            var onBoardReminders = await _reminderRepository.GetAllUserReminderByStatusAsync(u => (u.UserId == userId) && (u.ReminderStatus == ReminderStatus.Onboard), filter);
+            return onBoardReminders;
         }
 
         public async Task<PaginatedList<ReminderDto>> GetDoneReminderByUserIdAsync(Guid userId, PaginationFilter filter)
         {
-            var doneReminders = await _reminderRepository.GetAllUserReminderByStatusAsync(u => u.Id == userId && u.ReminderStatus == ReminderStatus.Done, filter);
+            var doneReminders = await _reminderRepository.GetAllUserReminderByStatusAsync(u => (u.UserId == userId) && (u.ReminderStatus == ReminderStatus.Done), filter);
             return doneReminders;
         }
     }

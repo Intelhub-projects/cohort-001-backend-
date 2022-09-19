@@ -57,7 +57,7 @@ namespace WebApi.Controllers
         [ProducesResponseType((int)HttpStatusCode.Unauthorized, Type = typeof(BaseResponse))]
         public async Task<IActionResult> GetUserDoneRemindersByUserIdAsync([FromQuery] Guid userId, [FromQuery] PaginationFilter filter)
         {
-            var response = await _reminderService.GetOnboardReminderByUserIdAsync(userId, filter);
+            var response = await _reminderService.GetDoneReminderByUserIdAsync(userId, filter);
             return Ok(response);
         }
     }

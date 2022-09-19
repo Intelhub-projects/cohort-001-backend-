@@ -10,7 +10,6 @@ namespace Core.Appliaction.DTOs
     {
         public Guid Id { get; set; }
         public Guid ReminderId { get; set; }
-        public ReminderDto Reminder { get; set; }
         public string Todo { get; set; }
         public DateTime TodoTime { get; set; }
     }

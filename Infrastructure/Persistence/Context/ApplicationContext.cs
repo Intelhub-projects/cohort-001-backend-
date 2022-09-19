@@ -89,5 +89,6 @@ namespace Persistence.Context
         public DbSet<UserRole> UserRoles {get; set;}
         public DbSet<Reminder> Reminders {get; set;}
         public DbSet<Message> Messages { get; set; }
+        public DbSet<MyTask> Tasks { get; set; }
     }
 }
