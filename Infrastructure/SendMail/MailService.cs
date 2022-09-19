@@ -2,6 +2,7 @@
 using Application.Interfaces.Services;
 using Core.Appliaction.Interfaces.Services;
 using Core.Domain.Entities;
+using Infrastructure.ApiSecretFolder;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Linq;
 using sib_api_v3_sdk.Api;
@@ -27,6 +28,8 @@ namespace Infrastructure.SendMail
         {
             _configuration = configuration;
             _mailKey = _configuration.GetSection("MailConfiguration")["mailKey"];
+
+            //_mailKey = APIKeys.mailKey;
         }
 
         public Task<BaseResponse> SendWelcomeMailToNewPatient(string recipientName, string recipientMail, string text)
