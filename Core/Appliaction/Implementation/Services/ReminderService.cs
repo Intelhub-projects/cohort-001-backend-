@@ -99,6 +99,7 @@ namespace Core.Appliaction.Implementation.Services
         public async Task<bool> SendAlert()
         {
             var reminders = await _reminderRepository.GetAllRemindersByStatusAsync(ReminderStatus.Onboard);
+            if(reminders.Count == 0) return false;
             var nonDaily = reminders.Where(t => t.ReminderType == ReminderType.NonDaily);
             var daily = reminders.Where(t => t.ReminderType == ReminderType.Daily);
 

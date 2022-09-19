@@ -22,55 +22,6 @@ namespace Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("Core.Domain.Entities.Message", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("LastModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("MessageType")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Text")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Messages");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("5a75734e-61bb-494a-9c39-ee0fa17a641a"),
-                            CreatedOn = new DateTime(2022, 9, 17, 10, 32, 35, 123, DateTimeKind.Utc).AddTicks(2653),
-                            IsDeleted = false,
-                            LastModifiedOn = new DateTime(2022, 9, 17, 10, 32, 35, 123, DateTimeKind.Utc).AddTicks(2654),
-                            MessageType = 1,
-                            Text = "Welcome to MedPharm! We're glad you are here. Enjoy our distinct healthcare offers..."
-                        });
-                });
-
             modelBuilder.Entity("Core.Domain.Entities.MyTask", b =>
                 {
                     b.Property<Guid>("Id")
@@ -200,26 +151,26 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("a12dc106-29d0-4b34-9860-fb61eee64065"),
-                            CreatedOn = new DateTime(2022, 9, 17, 10, 32, 35, 123, DateTimeKind.Utc).AddTicks(2357),
+                            Id = new Guid("7ff621fa-2442-426b-8734-3edae0c7cb1a"),
+                            CreatedOn = new DateTime(2022, 9, 19, 10, 36, 37, 447, DateTimeKind.Utc).AddTicks(9146),
                             IsDeleted = false,
-                            LastModifiedOn = new DateTime(2022, 9, 17, 10, 32, 35, 123, DateTimeKind.Utc).AddTicks(2360),
+                            LastModifiedOn = new DateTime(2022, 9, 19, 10, 36, 37, 447, DateTimeKind.Utc).AddTicks(9149),
                             Name = "Admin"
                         },
                         new
                         {
-                            Id = new Guid("0bb38ebd-39ce-4331-8ced-0a10e0a24ba7"),
-                            CreatedOn = new DateTime(2022, 9, 17, 10, 32, 35, 123, DateTimeKind.Utc).AddTicks(2427),
+                            Id = new Guid("5f757667-68c6-4e13-9d22-2928adc6cc65"),
+                            CreatedOn = new DateTime(2022, 9, 19, 10, 36, 37, 447, DateTimeKind.Utc).AddTicks(9260),
                             IsDeleted = false,
-                            LastModifiedOn = new DateTime(2022, 9, 17, 10, 32, 35, 123, DateTimeKind.Utc).AddTicks(2427),
+                            LastModifiedOn = new DateTime(2022, 9, 19, 10, 36, 37, 447, DateTimeKind.Utc).AddTicks(9261),
                             Name = "Patient"
                         },
                         new
                         {
-                            Id = new Guid("c4f12ab2-629a-4551-aede-d889496db09a"),
-                            CreatedOn = new DateTime(2022, 9, 17, 10, 32, 35, 123, DateTimeKind.Utc).AddTicks(2433),
+                            Id = new Guid("0f98c670-0439-4f24-80f2-bcf9d0a9a65a"),
+                            CreatedOn = new DateTime(2022, 9, 19, 10, 36, 37, 447, DateTimeKind.Utc).AddTicks(9267),
                             IsDeleted = false,
-                            LastModifiedOn = new DateTime(2022, 9, 17, 10, 32, 35, 123, DateTimeKind.Utc).AddTicks(2433),
+                            LastModifiedOn = new DateTime(2022, 9, 19, 10, 36, 37, 447, DateTimeKind.Utc).AddTicks(9267),
                             Name = "Staff"
                         });
                 });
