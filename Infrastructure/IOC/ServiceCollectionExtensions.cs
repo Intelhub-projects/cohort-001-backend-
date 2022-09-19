@@ -28,7 +28,6 @@ namespace IOC
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IReminderService, ReminderService>();
             services.AddScoped<IResponseService, ResponseService>();
-            services.AddScoped<IMailService, MailService>();
             services.AddScoped<IMailAddressVerificationService, MailAddressVerificationService>();
             return services;
         }
