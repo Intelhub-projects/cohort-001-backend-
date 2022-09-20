@@ -36,7 +36,7 @@ namespace Infrastructure.SendMail
                 Configuration.Default.ApiKey.Add("api-key", _mailKey);
             }
 
-            //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
+           
 
             var apiInstance = new TransactionalEmailsApi();
             string SenderName = "FORT";
