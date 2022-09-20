@@ -2,13 +2,17 @@
 using Core.Domain.Entities;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Linq;
+using sib_api_v3_sdk.Api;
 using sib_api_v3_sdk.Model;
+using sib_api_v3_sdk.Client;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Configuration = sib_api_v3_sdk.Client.Configuration;
 
 namespace Infrastructure.SendMail
 {
@@ -26,10 +30,13 @@ namespace Infrastructure.SendMail
         
         public void SendEmail(MailRequest mailRequest)
         {
+
             if (!Configuration.Default.ApiKey.ContainsKey("api-key"))
             {
                 Configuration.Default.ApiKey.Add("api-key", _mailKey);
             }
+
+            //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
 
             var apiInstance = new TransactionalEmailsApi();
             string SenderName = "FORT";
@@ -54,7 +61,7 @@ namespace Infrastructure.SendMail
             string ReplyToEmail = "timehinfarhaat@gmail.com";
             SendSmtpEmailReplyTo ReplyTo = new SendSmtpEmailReplyTo(ReplyToEmail, ReplyToName);
             string AttachmentUrl = null;
-            string stringInBase64 = "aGVsbG8gdGhpcyBpcyB0ZXN0";
+            string stringInBase64 = Base64Encode(mailRequest.HtmlContent);
             byte[] Content = System.Convert.FromBase64String(stringInBase64);
             string AttachmentName = "Welcome.txt";
             SendSmtpEmailAttachment AttachmentContent = new SendSmtpEmailAttachment(AttachmentUrl, Content, AttachmentName);
@@ -91,6 +98,12 @@ namespace Infrastructure.SendMail
                 Console.WriteLine(e.Message);
                 Console.ReadLine();
             }
+        }
+
+        public static string Base64Encode(string plainText)
+        {
+            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
+            return System.Convert.ToBase64String(plainTextBytes);
         }
     }
 }
