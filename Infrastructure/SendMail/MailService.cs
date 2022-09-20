@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Configuration = sib_api_v3_sdk.Client.Configuration;
+using Application.DTOs;
 
 namespace Infrastructure.SendMail
 {
@@ -24,11 +25,11 @@ namespace Infrastructure.SendMail
         public MailService(IConfiguration configuration)
         {
             _configuration = configuration;
-            _mailKey = _configuration.GetSection("MailConfiguration")["mailKey"];
+            _mailKey = _configuration["mailKey"];
         }
 
         
-        public void SendEmail(MailRequest mailRequest)
+        public Task<BaseResponse> SendEmail(MailRequest mailRequest)
         {
 
             if (!Configuration.Default.ApiKey.ContainsKey("api-key"))
@@ -39,26 +40,26 @@ namespace Infrastructure.SendMail
            
 
             var apiInstance = new TransactionalEmailsApi();
-            string SenderName = "FORT";
-            string SenderEmail = "timehinfarhaat@gmail.com";
+            string SenderName = "MEDPHARM";
+            string SenderEmail = "intelhubmedpharm@gmail.com";
             SendSmtpEmailSender Email = new SendSmtpEmailSender(SenderName, SenderEmail);
             SendSmtpEmailTo smtpEmailTo = new SendSmtpEmailTo(mailRequest.ToEmail, mailRequest.ToName);
             List<SendSmtpEmailTo> To = new List<SendSmtpEmailTo>();
             To.Add(smtpEmailTo);
-            string BccName = "Janice Doe";
-            string BccEmail = "example2@example2.com";
+            string BccName = "Abass Adebayo";
+            string BccEmail = "greatmoh007@gmail.com.com";
             SendSmtpEmailBcc BccData = new SendSmtpEmailBcc(BccEmail, BccName);
             List<SendSmtpEmailBcc> Bcc = new List<SendSmtpEmailBcc>();
             Bcc.Add(BccData);
-            string CcName = "John Doe";
-            string CcEmail = "example3@example2.com";
+            string CcName = "Fathi";
+            string CcEmail = "folarinmuhammedfathi.k@gmail.com";
             SendSmtpEmailCc CcData = new SendSmtpEmailCc(CcEmail, CcName);
             List<SendSmtpEmailCc> Cc = new List<SendSmtpEmailCc>();
             Cc.Add(CcData);
             string TextContent = null;
             string Subject = "My {{params.subject}}";
-            string ReplyToName = "FORT";
-            string ReplyToEmail = "timehinfarhaat@gmail.com";
+            string ReplyToName = "MEDPHARM";
+            string ReplyToEmail = "intelhubmedpharm@gmail.com";
             SendSmtpEmailReplyTo ReplyTo = new SendSmtpEmailReplyTo(ReplyToEmail, ReplyToName);
             string AttachmentUrl = null;
             string stringInBase64 = Base64Encode(mailRequest.HtmlContent);
@@ -98,7 +99,11 @@ namespace Infrastructure.SendMail
                 Console.WriteLine(e.Message);
                 Console.ReadLine();
             }
+
+           
+            
         }
+
 
         public static string Base64Encode(string plainText)
         {

@@ -1,4 +1,5 @@
-﻿using Core.Domain.Entities;
+﻿using Application.DTOs;
+using Core.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace Core.Appliaction.Interfaces.Services
 {
     public interface IMailService
     {
-        public void SendEmail(MailRequest mailRequest);
+        public Task<MailRequest> SendEmail(MailRequest mailRequest);
 
     }
 }
