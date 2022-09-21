@@ -57,7 +57,7 @@ namespace Infrastructure.SendMail
             List<SendSmtpEmailCc> Cc = new List<SendSmtpEmailCc>();
             Cc.Add(CcData);
             string TextContent = null;
-            string Subject = "My {{params.subject}}";
+            string Subject = "New User's {{params.subject}}";
             string ReplyToName = "MEDPHARM";
             string ReplyToEmail = "intelhubmedpharm@gmail.com";
             SendSmtpEmailReplyTo ReplyTo = new SendSmtpEmailReplyTo(ReplyToEmail, ReplyToName);
@@ -73,7 +73,7 @@ namespace Infrastructure.SendMail
             long? TemplateId = null;
             JObject Params = new JObject();
             Params.Add("parameter", "My param value");
-            Params.Add("subject", "New Subject");
+            Params.Add("subject", "Welcome Message");
             List<string> Tags = new List<string>();
             Tags.Add("mytag");
             SendSmtpEmailTo1 smtpEmailTo1 = new SendSmtpEmailTo1(mailRequest.ToEmail, mailRequest.ToName);
