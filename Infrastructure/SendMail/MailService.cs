@@ -37,7 +37,7 @@ namespace Infrastructure.SendMail
                 Configuration.Default.ApiKey.Add("api-key", _mailKey);
             }
 
-           
+          
 
             var apiInstance = new TransactionalEmailsApi();
             string SenderName = "MEDPHARM";

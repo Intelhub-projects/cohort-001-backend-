@@ -1,12 +1,15 @@
+using System.Reflection;
 using System.Text;
 using IOC;
 using IOC.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using NLog.Web;
 using RestfulAPI.Filters;
+using Configuration = sib_api_v3_sdk.Client.Configuration;
 
 var myAllowSpecialOrigins = "_myAllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
@@ -50,9 +53,9 @@ builder.Services.AddAuthentication(options =>
     options.RequireHttpsMetadata = false;
 });
 
-builder.Configuration.AddEnvironmentVariables()
-                     .AddKeyVault()
-                     .AddUserSecrets(Assembly.GetExecutingAssembly(), true);
+//builder.Configuration.AddEnvironmentVariables()
+//    .AddKeyPerFile()
+//     .AddUserSecrets(Assembly.GetExecutingAssembly(), true);
 
 builder.Services.AddSwaggerGen(c =>
 {
