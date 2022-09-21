@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Domain.Entities
+namespace Core.Appliaction.DTOs
 {
-    public class MailRequest
+    public class MailRequestDto
     {
         public string ToEmail { get; set; }
         public string ToName { get; set; }

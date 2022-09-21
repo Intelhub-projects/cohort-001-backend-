@@ -1,5 +1,4 @@
 ﻿using Core.Appliaction.Interfaces.Services;
-using Core.Domain.Entities;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Linq;
 using sib_api_v3_sdk.Api;
@@ -14,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Configuration = sib_api_v3_sdk.Client.Configuration;
 using Application.DTOs;
+using Core.Appliaction.DTOs;
 
 namespace Infrastructure.SendMail
 {
@@ -29,7 +29,7 @@ namespace Infrastructure.SendMail
         }
 
         
-        public Task<BaseResponse> SendEmail(MailRequest mailRequest)
+        public async Task<BaseResponse> SendEmail(MailRequestDto mailRequest)
         {
 
             if (!Configuration.Default.ApiKey.ContainsKey("api-key"))
@@ -100,7 +100,12 @@ namespace Infrastructure.SendMail
                 Console.ReadLine();
             }
 
-           
+            return new BaseResponse
+            {
+
+                Message = "Message successfully sent",
+                Status = true
+            };
             
         }
 
