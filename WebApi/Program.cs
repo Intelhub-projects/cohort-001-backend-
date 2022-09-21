@@ -24,6 +24,7 @@ builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.Configure<DataProtectionTokenProviderOptions>(o =>
    o.TokenLifespan = TimeSpan.FromHours(3));
 
+
 builder.Services.AddCors(options => options.AddPolicy(myAllowSpecialOrigins, builder =>
 {
     builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
@@ -48,6 +49,10 @@ builder.Services.AddAuthentication(options =>
     };
     options.RequireHttpsMetadata = false;
 });
+
+builder.Configuration.AddEnvironmentVariables()
+                     .AddKeyVault()
+                     .AddUserSecrets(Assembly.GetExecutingAssembly(), true);
 
 builder.Services.AddSwaggerGen(c =>
 {

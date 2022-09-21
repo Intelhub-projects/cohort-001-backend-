@@ -29,7 +29,7 @@ namespace Infrastructure.SendMail
         }
 
         
-        public async Task<BaseResponse> SendEmail(MailRequestDto mailRequest)
+        public Task<BaseResponse> SendEmail(MailRequestDto mailRequest)
         {
 
             if (!Configuration.Default.ApiKey.ContainsKey("api-key"))
@@ -100,12 +100,12 @@ namespace Infrastructure.SendMail
                 Console.ReadLine();
             }
 
-            return new BaseResponse
+            return System.Threading.Tasks.Task.FromResult(new BaseResponse
             {
 
                 Message = "Message successfully sent",
                 Status = true
-            };
+            });
             
         }
 
