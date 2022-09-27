@@ -217,6 +217,17 @@ namespace Application.Implementations.Services
             };
             var newPatient = await _userManager.CreateAsync(patient);
 
+            if (newPatient == null)
+            {
+                throw new Exception(UsersConstant.NotSuccessMessage);
+            }
+            var result = await _userManager.AddToRoleAsync(patient, "Patient");
+            return new BaseResponse
+            {
+                Message = UsersConstant.SuccessMessage,
+                Status = true
+            };
+
 
             var mailRequest = new MailRequestDto
             {
@@ -240,16 +251,7 @@ namespace Application.Implementations.Services
                 $"ADMIN.");
 
 
-            if (newPatient == null)
-            {
-                throw new Exception(UsersConstant.NotSuccessMessage);
-            }
-            var result = await _userManager.AddToRoleAsync(patient, "Patient");
-            return new BaseResponse
-            {
-                Message = UsersConstant.SuccessMessage,
-                Status = true
-            };
+
 
 
         }

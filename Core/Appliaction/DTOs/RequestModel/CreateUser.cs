@@ -30,5 +30,7 @@ namespace Application.DTOs.RequestModels
         public string Password { get; set; }
         public string PhoneNumber { get; set; }
         public Gender Gender { get; set; }
+
+        public IEnumerable<string> RoleNames { get; set; }
     }
 }
