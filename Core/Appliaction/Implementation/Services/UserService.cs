@@ -8,6 +8,7 @@ using Application.Interfaces.Identity;
 using Application.Interfaces.Repositories;
 using Application.Interfaces.Services;
 using Application.Wrapper;
+using Core.Appliaction.DTOs;
 using Core.Appliaction.Interfaces.Repository;
 using Core.Appliaction.Interfaces.Services;
 using Core.Domain.Entities;
@@ -15,6 +16,7 @@ using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -28,10 +30,11 @@ namespace Application.Implementations.Services
         private readonly IUserRepository _userRepository;
         private readonly IMailAddressVerificationService _mailAddressVerificationService;
         private readonly IResponseService _responseService;
+        private readonly IMailService _mailService;
 
-        public UserService(UserManager<User> userManager, RoleManager<Role> roleManager, IIdentityService identityService, 
+        public UserService(UserManager<User> userManager, RoleManager<Role> roleManager, IIdentityService identityService,
             IUserRepository userRepository, IMailAddressVerificationService mailAddressVerificationService,
-              IResponseService responseService)
+              IResponseService responseService, IMailService mailService)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -39,6 +42,7 @@ namespace Application.Implementations.Services
             _userRepository = userRepository;
             _mailAddressVerificationService = mailAddressVerificationService;
             _responseService = responseService;
+            _mailService = mailService;
         }
 
 
@@ -55,7 +59,7 @@ namespace Application.Implementations.Services
             {
                 throw new ArgumentNullException(nameof(request));
             }
-           
+
             var user = new User
             {
                 FirstName = request.FirstName,
@@ -131,7 +135,7 @@ namespace Application.Implementations.Services
                 throw new ArgumentNullException(nameof(request));
             }
             var roleExist = await _roleManager.RoleExistsAsync(request.Name);
-            if(roleExist)
+            if (roleExist)
             {
                 throw new BadRequestException(UsersConstant.AlreadyExist);
             }
@@ -153,7 +157,7 @@ namespace Application.Implementations.Services
 
         public async Task<AdminRoleResponseModel> GetRoleAsync(string name)
         {
-            var role= await _roleManager.FindByNameAsync(name);
+            var role = await _roleManager.FindByNameAsync(name);
             return new AdminRoleResponseModel
             {
                 RoleId = role.Id,
@@ -179,7 +183,7 @@ namespace Application.Implementations.Services
         public async Task<BaseResponse> CreatePatient(CreatePatient request)
         {
             var checkUserName = await _userRepository.AnyAsync(checkUserName => checkUserName.UserName == request.UserName);
-            
+
             if (checkUserName)
             {
                 throw new BadRequestException(UsersConstant.AlreadyExist);
@@ -199,7 +203,7 @@ namespace Application.Implementations.Services
                 Email = request.Email,
                 Address = request.Address,
                 Gender = request.Gender,
-                
+
 
             };
 
@@ -213,6 +217,28 @@ namespace Application.Implementations.Services
             };
             var newPatient = await _userManager.CreateAsync(patient);
 
+            if (newPatient == null)
+            {
+                throw new Exception(UsersConstant.NotSuccessMessage);
+            }
+            var result = await _userManager.AddToRoleAsync(patient, "Patient");
+            return new BaseResponse
+            {
+                Message = UsersConstant.SuccessMessage,
+                Status = true
+            };
+
+
+            var mailRequest = new MailRequestDto
+            {
+                ToEmail = patient.Email,
+                ToName = patient.FirstName,
+                HtmlContent = $"<html><body><div><h1> {DateTime.Now}, Dear {patient.FirstName}, " +
+                $"Welcome to MedPharm Health Care</h1><div><h3>Your login details are " +
+                $"Email: {patient.Email}, Password: {request.Password}. for more enquiries, visit www.intelhubmedpharmcare.com.  Regards, ADMIN.</h3><h5>MEDPHARM!-</h5><h6></h6></div></div>></body></html>"
+
+            };
+            await _mailService.SendEmail(mailRequest);
             await _responseService.SendResponse(patient.PhoneNumber,
 
                 $"{DateTime.Now} " +
@@ -224,17 +250,8 @@ namespace Application.Implementations.Services
                 $"Regards, " +
                 $"ADMIN.");
 
-            
-            if (newPatient == null)
-            {
-                throw new Exception(UsersConstant.NotSuccessMessage);
-            }
-            var result = await _userManager.AddToRoleAsync(patient, "Patient");
-            return new BaseResponse
-            {
-                Message = UsersConstant.SuccessMessage,
-                Status = true
-            };
+
+
 
 
         }
